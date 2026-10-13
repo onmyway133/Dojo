@@ -32,3 +32,4 @@ pub fn fit_titlebar_to_traffic_lights(ns_window: tauri::Result<*mut std::ffi::c_
 
 #[cfg(not(target_os = "macos"))]
 pub fn fit_titlebar_to_traffic_lights<T>(_ns_window: T) {}
+
