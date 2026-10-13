@@ -1,0 +1,263 @@
+/*
+ * Flat: a modern macOS look. Surfaces separated by fills and spacing, no bevels,
+ * sidebar shows the window's vibrancy material inside the app.
+ */
+:root[data-style="flat"] {
+  --ds-font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.21 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+  --primary: var(--ds-accent);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0 0);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.955 0 0);
+  --muted-foreground: oklch(0.52 0 0);
+  --accent: oklch(0 0 0 / 6%);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.58 0.22 27);
+  --success: oklch(0.6 0.16 150);
+  --warning: oklch(0.72 0.16 70);
+  --border: oklch(0 0 0 / 8%);
+  --input: transparent;
+  --ring: color-mix(in oklab, var(--ds-accent) 55%, transparent);
+  --section: oklch(0.97 0 0);
+  --section-hover: oklch(0.945 0 0);
+  --field: oklch(0 0 0 / 4.5%);
+  --field-hover: oklch(0 0 0 / 7%);
+  --selected: var(--ds-accent-soft);
+  --sidebar: oklch(0.955 0 0);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-accent: oklch(0 0 0 / 6%);
+
+  --ds-body-bg: oklch(0.955 0 0);
+  --ds-window-bg: var(--background);
+  --ds-emboss: none;
+  --ds-hover-filter: none;
+  --ds-active-filter: none;
+  --ds-shine-soft: none;
+  --ds-shine: none;
+
+  --ds-sidebar-bg: oklch(0.955 0 0);
+  --ds-sidebar-fg: var(--foreground);
+  --ds-sidebar-edge: none;
+  --ds-sidebar-heading-fg: var(--muted-foreground);
+  --ds-sidebar-heading-transform: none;
+  --ds-sidebar-heading-tracking: 0;
+  --ds-sidebar-item-radius: 6px;
+  --ds-sidebar-item-hover-bg: oklch(0 0 0 / 6%);
+  --ds-sidebar-icon-fg: var(--ds-accent);
+  --ds-sidebar-item-on-bg: var(--ds-accent-soft);
+  --ds-sidebar-item-on-fg: var(--foreground);
+  --ds-sidebar-item-on-shadow: none;
+  --ds-sidebar-item-on-text-shadow: none;
+  --ds-sidebar-item-on-weight: 500;
+  --ds-sidebar-icon-on-fg: var(--ds-accent);
+
+  --ds-toolbar-bg: transparent;
+  --ds-toolbar-edge: none;
+  --ds-title-fg: var(--foreground);
+
+  --ds-panel-bg: oklch(0.97 0 0);
+  --ds-panel-border: transparent;
+  --ds-panel-shadow: none;
+  --ds-panel-radius: 10px;
+  --ds-panel-title-fg: var(--foreground);
+
+  --ds-well-bg: transparent;
+  --ds-well-border: transparent;
+  --ds-well-shadow: none;
+  --ds-well-radius: 0 0 10px 10px;
+  --ds-well-inset: 0;
+
+  --ds-card-bg: oklch(0.97 0 0);
+  --ds-card-hover-bg: oklch(0.945 0 0);
+  --ds-card-border: transparent;
+  --ds-card-shadow: none;
+  --ds-row-hover-bg: oklch(0 0 0 / 4.5%);
+  --ds-table-stripe: oklch(0 0 0 / 4.5%);
+
+  --ds-control-bg: oklch(0 0 0 / 5.5%);
+  --ds-control-hover-bg: oklch(0 0 0 / 8%);
+  --ds-control-fg: var(--foreground);
+  --ds-control-border: transparent;
+  --ds-control-shadow: none;
+  --ds-control-text-shadow: none;
+  --ds-control-radius: 8px;
+
+  --ds-gel-bg: var(--ds-accent);
+  --ds-gel-selected-bg: var(--ds-accent);
+  --ds-gel-fg: oklch(1 0 0);
+  --ds-gel-border: transparent;
+  --ds-gel-shadow: none;
+  --ds-gel-text-shadow: none;
+  --ds-danger-bg: color-mix(in oklab, var(--destructive) 12%, transparent);
+  --ds-danger-fg: var(--destructive);
+  --ds-danger-border: transparent;
+
+  --ds-tool-bg: transparent;
+  --ds-tool-hover-bg: oklch(0 0 0 / 6%);
+  --ds-tool-fg: var(--foreground);
+  --ds-tool-border: transparent;
+  --ds-tool-shadow: none;
+  --ds-tool-radius: 7px;
+  --ds-tool-shine-opacity: 0;
+
+  --ds-field-bg: oklch(0 0 0 / 4.5%);
+  --ds-field-hover-bg: oklch(0 0 0 / 4.5%);
+  --ds-field-border: transparent;
+  --ds-field-shadow: none;
+  --ds-field-radius: 8px;
+
+  --ds-select-arrow-bg: transparent;
+  --ds-select-arrow-fg: var(--muted-foreground);
+  --ds-select-arrow-border: transparent;
+  --ds-select-arrow-radius: 4px;
+
+  --ds-segmented-bg: oklch(0 0 0 / 4.5%);
+  --ds-segmented-border: transparent;
+  --ds-segmented-shadow: none;
+  --ds-segmented-radius: 7px;
+  --ds-segmented-padding: 2px;
+  --ds-segmented-gap: 0;
+  --ds-segment-fg: var(--muted-foreground);
+  --ds-segment-hover-fg: var(--foreground);
+  --ds-segment-radius: 5px;
+  --ds-segment-end-radius: 5px;
+  --ds-segment-divider: none;
+  --ds-segment-on-bg: oklch(1 0 0);
+  --ds-segment-on-fg: var(--foreground);
+  --ds-segment-on-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+  --ds-segment-on-text-shadow: none;
+
+  --ds-chip-bg: oklch(0 0 0 / 4.5%);
+  --ds-chip-hover-bg: oklch(0 0 0 / 7%);
+  --ds-chip-border: transparent;
+  --ds-chip-shadow: none;
+  --ds-chip-on-bg: var(--ds-accent-soft);
+  --ds-chip-on-fg: var(--ds-accent);
+  --ds-chip-on-border: transparent;
+  --ds-chip-on-shadow: none;
+
+  --ds-switch-bg: oklch(0 0 0 / 15%);
+  --ds-switch-border: transparent;
+  --ds-switch-shadow: none;
+  --ds-switch-on-bg: var(--ds-accent);
+  --ds-switch-on-border: transparent;
+  --ds-switch-on-shadow: none;
+  --ds-switch-thumb-bg: oklch(1 0 0);
+  --ds-switch-thumb-border: transparent;
+  --ds-switch-thumb-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+
+  --ds-checkbox-bg: oklch(0 0 0 / 12%);
+  --ds-checkbox-border: transparent;
+  --ds-checkbox-shadow: none;
+
+  --ds-badge-bg: var(--secondary);
+  --ds-badge-fg: var(--secondary-foreground);
+  --ds-badge-border: transparent;
+  --ds-badge-shadow: none;
+  --ds-badge-accent-bg: var(--ds-accent-soft);
+  --ds-badge-accent-fg: var(--ds-accent);
+  --ds-badge-accent-border: transparent;
+  --ds-badge-danger-bg: color-mix(in oklab, var(--destructive) 10%, transparent);
+  --ds-badge-danger-fg: var(--destructive);
+  --ds-badge-danger-border: transparent;
+
+  --ds-tile-bg: color-mix(in oklab, var(--ds-accent) 12%, transparent);
+  --ds-tile-fg: var(--ds-accent);
+  --ds-tile-border: transparent;
+  --ds-tile-shadow: none;
+
+  --ds-dropzone-bg: oklch(0 0 0 / 4.5%);
+  --ds-dropzone-hover-bg: oklch(0 0 0 / 7%);
+  --ds-status-error-bg: color-mix(in oklab, var(--destructive) 10%, transparent);
+  --ds-status-error-border: transparent;
+  --ds-status-success-bg: color-mix(in oklab, var(--success) 12%, transparent);
+  --ds-status-success-border: transparent;
+
+  --ds-menu-bg: var(--popover);
+  --ds-menu-border: oklch(0 0 0 / 8%);
+  --ds-menu-shadow: 0 8px 30px rgb(0 0 0 / 0.15);
+  --ds-menu-item-on-bg: var(--ds-accent);
+  --ds-menu-item-on-fg: oklch(1 0 0);
+
+  --ds-tooltip-bg: oklch(0.21 0 0);
+  --ds-tooltip-fg: oklch(0.98 0 0);
+  --ds-tooltip-border: transparent;
+  --ds-tooltip-shadow: none;
+  --ds-tooltip-radius: 6px;
+}
+
+/* The native vibrancy material shows through the sidebar inside the app window. */
+:root[data-style="flat"].tauri {
+  --ds-body-bg: transparent;
+  --ds-sidebar-bg: transparent;
+}
+
+:root[data-style="flat"].dark {
+  --background: oklch(0.215 0 0);
+  --foreground: oklch(0.96 0 0);
+  --card: oklch(0.25 0 0);
+  --popover: oklch(0.26 0 0);
+  --secondary: oklch(1 0 0 / 7%);
+  --muted: oklch(1 0 0 / 7%);
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(1 0 0 / 8%);
+  --destructive: oklch(0.68 0.19 24);
+  --success: oklch(0.72 0.15 150);
+  --warning: oklch(0.8 0.14 75);
+  --border: oklch(1 0 0 / 9%);
+  --section: oklch(1 0 0 / 4.5%);
+  --section-hover: oklch(1 0 0 / 7.5%);
+  --field: oklch(1 0 0 / 6%);
+  --field-hover: oklch(1 0 0 / 9%);
+  --selected: color-mix(in oklab, var(--ds-accent) 26%, transparent);
+  --sidebar: oklch(0.24 0 0);
+  --sidebar-accent: oklch(1 0 0 / 8%);
+
+  --ds-body-bg: oklch(0.24 0 0);
+  --ds-sidebar-bg: oklch(0.24 0 0);
+  --ds-sidebar-item-hover-bg: oklch(1 0 0 / 7%);
+  --ds-sidebar-item-on-bg: color-mix(in oklab, var(--ds-accent) 28%, transparent);
+  --ds-sidebar-icon-fg: var(--ds-accent-light);
+  --ds-sidebar-icon-on-fg: var(--ds-accent-light);
+
+  --ds-panel-bg: oklch(1 0 0 / 4.5%);
+  --ds-card-bg: oklch(1 0 0 / 4.5%);
+  --ds-card-hover-bg: oklch(1 0 0 / 7.5%);
+  --ds-row-hover-bg: oklch(1 0 0 / 6%);
+  --ds-table-stripe: oklch(1 0 0 / 5%);
+
+  --ds-control-bg: oklch(1 0 0 / 8%);
+  --ds-control-hover-bg: oklch(1 0 0 / 12%);
+  --ds-tool-hover-bg: oklch(1 0 0 / 9%);
+  --ds-field-bg: oklch(1 0 0 / 6%);
+  --ds-field-hover-bg: oklch(1 0 0 / 6%);
+  --ds-segmented-bg: oklch(1 0 0 / 6%);
+  --ds-segment-on-bg: oklch(1 0 0 / 16%);
+  --ds-chip-bg: oklch(1 0 0 / 6%);
+  --ds-chip-hover-bg: oklch(1 0 0 / 9%);
+  --ds-chip-on-bg: color-mix(in oklab, var(--ds-accent) 28%, transparent);
+  --ds-chip-on-fg: var(--ds-accent-hi);
+  --ds-switch-bg: oklch(1 0 0 / 20%);
+  --ds-checkbox-bg: oklch(1 0 0 / 15%);
+  --ds-badge-accent-fg: var(--ds-accent-hi);
+  --ds-tile-bg: color-mix(in oklab, var(--ds-accent) 22%, transparent);
+  --ds-tile-fg: var(--ds-accent-hi);
+  --ds-dropzone-bg: oklch(1 0 0 / 6%);
+  --ds-dropzone-hover-bg: oklch(1 0 0 / 9%);
+  --ds-menu-border: oklch(1 0 0 / 10%);
+  --ds-menu-shadow: 0 8px 30px rgb(0 0 0 / 0.45);
+  --ds-tooltip-bg: oklch(0.96 0 0);
+  --ds-tooltip-fg: oklch(0.21 0 0);
+}
+
+:root[data-style="flat"].dark.tauri {
+  --ds-body-bg: transparent;
+  --ds-sidebar-bg: transparent;
+}

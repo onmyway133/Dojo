@@ -1,5 +1,6 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { useEffect, useSyncExternalStore } from "react";
+import { styleById } from "@/design/themes";
 import { inTauri } from "@/lib/platform";
 import { useSettings } from "@/stores/settings";
 
@@ -26,9 +27,16 @@ export function useApplyTheme() {
   const preference = useSettings((s) => s.theme);
   const resolved = useResolvedTheme();
 
+  const style = useSettings((s) => s.style);
+  const accent = useSettings((s) => s.accent);
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", resolved === "dark");
   }, [resolved]);
+
+  useEffect(() => {
+    applyStyle(style, accent);
+  }, [style, accent]);
 
   useEffect(() => {
     if (!inTauri) return;
@@ -36,4 +44,12 @@ export function useApplyTheme() {
       .setTheme(preference === "system" ? null : preference)
       .catch(() => {});
   }, [preference]);
+}
+
+/** Sets the design system attributes on <html>. Also called before the first render. */
+export function applyStyle(style: string, accent: string) {
+  const root = document.documentElement;
+  root.dataset.style = styleById(style).id;
+  root.dataset.accent = accent;
+  root.dataset.scrollbars = styleById(style).scrollbars;
 }

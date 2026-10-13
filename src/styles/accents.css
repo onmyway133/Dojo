@@ -1,0 +1,32 @@
+/*
+ * Accent colors, independent of the theme. `data-accent` on <html> picks one; themes
+ * derive their gel shades and tints from `--ds-accent` with color-mix.
+ */
+:root,
+:root[data-accent="blue"] {
+  --ds-accent: #2f7de0;
+}
+:root[data-accent="graphite"] {
+  --ds-accent: #6b7a8f;
+}
+:root[data-accent="green"] {
+  --ds-accent: #2f9e4f;
+}
+:root[data-accent="orange"] {
+  --ds-accent: #e57c1f;
+}
+:root[data-accent="pink"] {
+  --ds-accent: #d9457c;
+}
+:root[data-accent="purple"] {
+  --ds-accent: #8a56d6;
+}
+
+:root {
+  --ds-accent-hi: color-mix(in oklab, var(--ds-accent) 38%, white);
+  --ds-accent-light: color-mix(in oklab, var(--ds-accent) 62%, white);
+  --ds-accent-mid: color-mix(in oklab, var(--ds-accent) 90%, white);
+  --ds-accent-deep: color-mix(in oklab, var(--ds-accent) 85%, black);
+  --ds-accent-edge: color-mix(in oklab, var(--ds-accent) 72%, black);
+  --ds-accent-soft: color-mix(in oklab, var(--ds-accent) 15%, transparent);
+}

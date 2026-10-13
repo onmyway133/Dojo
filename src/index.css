@@ -1,11 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "./styles/accents.css";
+@import "./styles/themes/flat.css";
+@import "./styles/themes/aqua.css";
+@import "./styles/skins.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  --font-sans: var(--ds-font-ui);
   --font-heading: var(--font-sans);
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
 
@@ -54,46 +58,11 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Syntax colors (an Xcode-like palette) shared by every theme. */
 :root {
   --radius: 0.5rem;
-
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.21 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: var(--foreground);
-  --popover: oklch(1 0 0);
-  --popover-foreground: var(--foreground);
-  --primary: oklch(0.6 0.2 256);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.955 0 0);
-  --secondary-foreground: var(--foreground);
-  --muted: oklch(0.955 0 0);
-  --muted-foreground: oklch(0.52 0 0);
-  --accent: oklch(0 0 0 / 6%);
-  --accent-foreground: var(--foreground);
-  --destructive: oklch(0.58 0.22 27);
-  --success: oklch(0.6 0.16 150);
-  --warning: oklch(0.72 0.16 70);
-  --border: oklch(0 0 0 / 8%);
-  --input: transparent;
-  --ring: oklch(0.6 0.2 256 / 55%);
-
-  --section: oklch(0.97 0 0);
-  --section-hover: oklch(0.945 0 0);
-  --field: oklch(0 0 0 / 4.5%);
-  --field-hover: oklch(0 0 0 / 7%);
-  --selected: oklch(0.6 0.2 256 / 14%);
-
-  --sidebar: oklch(0.955 0 0);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: oklch(0 0 0 / 6%);
-  --sidebar-accent-foreground: var(--foreground);
-  --sidebar-border: transparent;
-  --sidebar-ring: var(--ring);
-
-  /* Syntax colors, an Xcode-like palette. */
+  /* Height of the title bar strip; the traffic lights are centred in it. */
+  --toolbar-height: 56px;
   --code-keyword: #ad3da4;
   --code-string: #c41a16;
   --code-number: #1c00cf;
@@ -102,34 +71,10 @@
   --code-comment: #5d6c79;
   --code-tag: #881280;
   --code-attribute: #994500;
-  --code-selection: oklch(0.6 0.2 256 / 18%);
+  --code-selection: color-mix(in oklab, var(--ds-accent) 22%, transparent);
 }
 
 .dark {
-  --background: oklch(0.215 0 0);
-  --foreground: oklch(0.96 0 0);
-  --card: oklch(0.25 0 0);
-  --popover: oklch(0.26 0 0);
-  --primary: oklch(0.66 0.18 256);
-  --secondary: oklch(1 0 0 / 7%);
-  --muted: oklch(1 0 0 / 7%);
-  --muted-foreground: oklch(0.7 0 0);
-  --accent: oklch(1 0 0 / 8%);
-  --destructive: oklch(0.68 0.19 24);
-  --success: oklch(0.72 0.15 150);
-  --warning: oklch(0.8 0.14 75);
-  --border: oklch(1 0 0 / 9%);
-  --ring: oklch(0.66 0.18 256 / 60%);
-
-  --section: oklch(1 0 0 / 4.5%);
-  --section-hover: oklch(1 0 0 / 7.5%);
-  --field: oklch(1 0 0 / 6%);
-  --field-hover: oklch(1 0 0 / 9%);
-  --selected: oklch(0.66 0.18 256 / 24%);
-
-  --sidebar: oklch(0.24 0 0);
-  --sidebar-accent: oklch(1 0 0 / 8%);
-
   --code-keyword: #ff7ab2;
   --code-string: #ff8170;
   --code-number: #d9c97c;
@@ -138,16 +83,7 @@
   --code-comment: #7f8c98;
   --code-tag: #ff7ab2;
   --code-attribute: #e8b36a;
-  --code-selection: oklch(0.66 0.18 256 / 30%);
-}
-
-/* Inside the Tauri window the sidebar shows the native vibrancy material. */
-html.tauri,
-html.tauri body {
-  background: transparent;
-}
-html.tauri {
-  --sidebar: transparent;
+  --code-selection: color-mix(in oklab, var(--ds-accent) 34%, transparent);
 }
 
 @layer base {
@@ -159,7 +95,8 @@ html.tauri {
     font-size: 14px;
   }
   body {
-    @apply bg-sidebar text-foreground;
+    background: var(--ds-body-bg);
+    color: var(--foreground);
     overscroll-behavior: none;
   }
   /* Native apps use the arrow cursor on controls and don't select chrome text. */

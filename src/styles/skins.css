@@ -1,0 +1,421 @@
+/*
+ * Design system skins.
+ *
+ * Every visual part of the app has one `ds-*` class. Its look comes only from
+ * `--ds-*` variables, which themes set (src/styles/themes/*.css). Layout (size,
+ * spacing, flex) stays in Tailwind classes on the component; look and feel lives here.
+ * To restyle the app, add a theme file instead of editing components.
+ */
+
+@layer components {
+  /* ---------- Surfaces ---------- */
+
+  .ds-window {
+    background: var(--ds-window-bg);
+    color: var(--foreground);
+  }
+
+  .ds-sidebar {
+    background: var(--ds-sidebar-bg);
+    color: var(--ds-sidebar-fg);
+    box-shadow: var(--ds-sidebar-edge);
+  }
+
+  .ds-toolbar {
+    background: var(--ds-toolbar-bg);
+    box-shadow: var(--ds-toolbar-edge);
+  }
+
+  .ds-title {
+    color: var(--ds-title-fg);
+    text-shadow: var(--ds-emboss);
+  }
+
+  .ds-panel {
+    background: var(--ds-panel-bg);
+    border: 1px solid var(--ds-panel-border);
+    box-shadow: var(--ds-panel-shadow);
+    border-radius: var(--ds-panel-radius);
+  }
+
+  .ds-panel-title {
+    color: var(--ds-panel-title-fg);
+    text-shadow: var(--ds-emboss);
+  }
+
+  /* Where editors and previews sit inside a panel. */
+  .ds-well {
+    background: var(--ds-well-bg);
+    border: 1px solid var(--ds-well-border);
+    box-shadow: var(--ds-well-shadow);
+    border-radius: var(--ds-well-radius);
+    margin: var(--ds-well-inset);
+  }
+
+  .ds-card {
+    position: relative;
+    background: var(--ds-card-bg);
+    border: 1px solid var(--ds-card-border);
+    box-shadow: var(--ds-card-shadow);
+    border-radius: var(--ds-panel-radius);
+    transition: background-color 120ms, filter 120ms;
+  }
+  .ds-card:hover {
+    background: var(--ds-card-hover-bg);
+    filter: var(--ds-hover-filter);
+  }
+
+  .ds-row:hover {
+    background: var(--ds-row-hover-bg);
+  }
+
+  .ds-table-stripe {
+    background: var(--ds-table-stripe);
+  }
+
+  /* ---------- Shine: the glossy top highlight of gel controls (none in flat themes) ---------- */
+
+  /* Hosts form a stacking context so the shine (z-index -1) sits above their
+     background but below their text and icons. */
+  .ds-button,
+  .ds-chip,
+  .ds-icon-tile,
+  .ds-segment,
+  .ds-sidebar-item,
+  .ds-select-arrow {
+    position: relative;
+    z-index: 0;
+  }
+
+  .ds-button::before,
+  .ds-chip::before,
+  .ds-icon-tile::before,
+  .ds-segment[data-state="on"]::before,
+  .ds-sidebar-item[aria-current="page"]::before,
+  .ds-select-arrow::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 7%;
+    right: 7%;
+    top: 1px;
+    height: 48%;
+    border-radius: 999px;
+    background: var(--ds-shine);
+    pointer-events: none;
+  }
+  /* Selected states carry white labels, so they get a softer shine to keep contrast. */
+  .ds-chip[data-selected="true"]::before,
+  .ds-icon-tile::before,
+  .ds-segment[data-state="on"]::before,
+  .ds-sidebar-item[aria-current="page"]::before,
+  .ds-select-arrow::before {
+    background: var(--ds-shine-soft);
+  }
+
+  /* ---------- Controls ---------- */
+
+  .ds-button {
+    position: relative;
+    overflow: hidden;
+    background: var(--ds-control-bg);
+    color: var(--ds-control-fg);
+    border: 1px solid var(--ds-control-border);
+    box-shadow: var(--ds-control-shadow);
+    text-shadow: var(--ds-control-text-shadow);
+    border-radius: var(--ds-control-radius);
+    transition: background-color 120ms, filter 120ms;
+  }
+  .ds-button:hover {
+    background: var(--ds-control-hover-bg);
+    filter: var(--ds-hover-filter);
+  }
+  .ds-button:active {
+    filter: var(--ds-active-filter);
+  }
+  .ds-button[data-variant="default"] {
+    background: var(--ds-gel-bg);
+    color: var(--ds-gel-fg);
+    border-color: var(--ds-gel-border);
+    box-shadow: var(--ds-gel-shadow);
+    text-shadow: var(--ds-gel-text-shadow);
+  }
+  .ds-button[data-variant="destructive"] {
+    background: var(--ds-danger-bg);
+    color: var(--ds-danger-fg);
+    border-color: var(--ds-danger-border);
+    box-shadow: var(--ds-gel-shadow);
+    text-shadow: var(--ds-gel-text-shadow);
+  }
+  /* Toolbar and section icon buttons. */
+  .ds-button[data-variant="ghost"] {
+    background: var(--ds-tool-bg);
+    color: var(--ds-tool-fg);
+    border-color: var(--ds-tool-border);
+    box-shadow: var(--ds-tool-shadow);
+    text-shadow: none;
+    border-radius: var(--ds-tool-radius);
+  }
+  .ds-button[data-variant="ghost"]::before {
+    opacity: var(--ds-tool-shine-opacity);
+  }
+  .ds-button[data-variant="ghost"]:hover {
+    background: var(--ds-tool-hover-bg);
+  }
+  .ds-button[data-variant="link"] {
+    background: none;
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--ds-accent);
+  }
+  .ds-button[data-variant="link"]::before {
+    display: none;
+  }
+  .ds-button:disabled {
+    filter: none;
+  }
+
+  .ds-field {
+    background: var(--ds-field-bg);
+    color: var(--foreground);
+    border: 1px solid var(--ds-field-border);
+    box-shadow: var(--ds-field-shadow);
+    border-radius: var(--ds-field-radius);
+  }
+  .ds-field:hover:not(:focus-visible, :disabled) {
+    background: var(--ds-field-hover-bg);
+  }
+
+  /* Pop-up button: the trigger is a neutral control with an arrow box on the right. */
+  .ds-select-arrow {
+    position: relative;
+    overflow: hidden;
+    background: var(--ds-select-arrow-bg);
+    color: var(--ds-select-arrow-fg);
+    border: 1px solid var(--ds-select-arrow-border);
+    border-radius: var(--ds-select-arrow-radius);
+  }
+
+  .ds-segmented {
+    background: var(--ds-segmented-bg);
+    border: 1px solid var(--ds-segmented-border);
+    box-shadow: var(--ds-segmented-shadow);
+    border-radius: var(--ds-segmented-radius);
+    padding: var(--ds-segmented-padding);
+    gap: var(--ds-segmented-gap);
+  }
+  .ds-segment {
+    position: relative;
+    overflow: hidden;
+    color: var(--ds-segment-fg);
+    border-radius: var(--ds-segment-radius);
+    text-shadow: var(--ds-control-text-shadow);
+  }
+  .ds-segment + .ds-segment {
+    box-shadow: var(--ds-segment-divider);
+  }
+  .ds-segment:hover {
+    color: var(--ds-segment-hover-fg);
+  }
+  .ds-segment[data-state="on"] {
+    background: var(--ds-segment-on-bg);
+    color: var(--ds-segment-on-fg);
+    box-shadow: var(--ds-segment-on-shadow);
+    text-shadow: var(--ds-segment-on-text-shadow);
+  }
+  .ds-segmented > .ds-segment:first-child {
+    border-start-start-radius: var(--ds-segment-end-radius);
+    border-end-start-radius: var(--ds-segment-end-radius);
+  }
+  .ds-segmented > .ds-segment:last-child {
+    border-start-end-radius: var(--ds-segment-end-radius);
+    border-end-end-radius: var(--ds-segment-end-radius);
+  }
+
+  .ds-chip {
+    position: relative;
+    overflow: hidden;
+    background: var(--ds-chip-bg);
+    color: var(--ds-control-fg);
+    border: 1px solid var(--ds-chip-border);
+    box-shadow: var(--ds-chip-shadow);
+    text-shadow: var(--ds-control-text-shadow);
+  }
+  .ds-chip:hover {
+    background: var(--ds-chip-hover-bg);
+    filter: var(--ds-hover-filter);
+  }
+  .ds-chip[data-selected="true"] {
+    background: var(--ds-chip-on-bg);
+    color: var(--ds-chip-on-fg);
+    border-color: var(--ds-chip-on-border);
+    box-shadow: var(--ds-chip-on-shadow);
+    text-shadow: var(--ds-segment-on-text-shadow);
+  }
+  .ds-chip:not([data-selected="true"])::before {
+    opacity: var(--ds-tool-shine-opacity);
+  }
+
+  .ds-switch {
+    background: var(--ds-switch-bg);
+    border: 1px solid var(--ds-switch-border);
+    box-shadow: var(--ds-switch-shadow);
+  }
+  .ds-switch[data-state="checked"] {
+    background: var(--ds-switch-on-bg);
+    border-color: var(--ds-switch-on-border);
+    box-shadow: var(--ds-switch-on-shadow);
+  }
+  .ds-switch-thumb {
+    background: var(--ds-switch-thumb-bg);
+    border: 1px solid var(--ds-switch-thumb-border);
+    box-shadow: var(--ds-switch-thumb-shadow);
+  }
+
+  .ds-checkbox {
+    background: var(--ds-checkbox-bg);
+    border: 1px solid var(--ds-checkbox-border);
+    box-shadow: var(--ds-checkbox-shadow);
+  }
+  .ds-checkbox[data-state="checked"] {
+    background: var(--ds-gel-bg);
+    border-color: var(--ds-gel-border);
+    box-shadow: var(--ds-gel-shadow);
+    color: var(--ds-gel-fg);
+  }
+
+  .ds-badge {
+    background: var(--ds-badge-bg);
+    color: var(--ds-badge-fg);
+    border: 1px solid var(--ds-badge-border);
+    box-shadow: var(--ds-badge-shadow);
+    text-shadow: var(--ds-control-text-shadow);
+  }
+  .ds-badge[data-variant="default"] {
+    background: var(--ds-badge-accent-bg);
+    color: var(--ds-badge-accent-fg);
+    border-color: var(--ds-badge-accent-border);
+  }
+  .ds-badge[data-variant="destructive"] {
+    background: var(--ds-badge-danger-bg);
+    color: var(--ds-badge-danger-fg);
+    border-color: var(--ds-badge-danger-border);
+  }
+
+  .ds-icon-tile {
+    position: relative;
+    overflow: hidden;
+    background: var(--ds-tile-bg);
+    color: var(--ds-tile-fg);
+    border: 1px solid var(--ds-tile-border);
+    box-shadow: var(--ds-tile-shadow);
+  }
+
+  .ds-dropzone {
+    background: var(--ds-dropzone-bg);
+    border: 1px solid var(--ds-well-border);
+    box-shadow: var(--ds-well-shadow);
+  }
+  .ds-dropzone:hover {
+    background: var(--ds-dropzone-hover-bg);
+  }
+  .ds-dropzone[data-dragging="true"] {
+    background: var(--ds-accent-soft);
+    color: var(--ds-accent);
+  }
+
+  .ds-status {
+    border: 1px solid transparent;
+  }
+  .ds-status[data-tone="error"] {
+    background: var(--ds-status-error-bg);
+    color: var(--destructive);
+    border-color: var(--ds-status-error-border);
+  }
+  .ds-status[data-tone="success"] {
+    background: var(--ds-status-success-bg);
+    color: var(--success);
+    border-color: var(--ds-status-success-border);
+  }
+  .ds-status[data-tone="info"] {
+    background: var(--ds-field-bg);
+    color: var(--muted-foreground);
+  }
+
+  /* ---------- Sidebar ---------- */
+
+  .ds-sidebar-heading {
+    color: var(--ds-sidebar-heading-fg);
+    text-shadow: var(--ds-emboss);
+    text-transform: var(--ds-sidebar-heading-transform);
+    letter-spacing: var(--ds-sidebar-heading-tracking);
+  }
+  .ds-sidebar-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--ds-sidebar-item-radius);
+  }
+  .ds-sidebar-item:hover {
+    background: var(--ds-sidebar-item-hover-bg);
+  }
+  .ds-sidebar-item svg {
+    color: var(--ds-sidebar-icon-fg);
+  }
+  .ds-sidebar-item[aria-current="page"] {
+    background: var(--ds-sidebar-item-on-bg);
+    color: var(--ds-sidebar-item-on-fg);
+    box-shadow: var(--ds-sidebar-item-on-shadow);
+    text-shadow: var(--ds-sidebar-item-on-text-shadow);
+    font-weight: var(--ds-sidebar-item-on-weight);
+  }
+  .ds-sidebar-item[aria-current="page"] svg {
+    color: var(--ds-sidebar-icon-on-fg);
+  }
+
+  /* ---------- Overlays ---------- */
+
+  .ds-menu {
+    background: var(--ds-menu-bg);
+    color: var(--popover-foreground);
+    border: 1px solid var(--ds-menu-border);
+    box-shadow: var(--ds-menu-shadow);
+  }
+  .ds-menu-item[data-highlighted],
+  .ds-menu-item[data-selected="true"] {
+    background: var(--ds-menu-item-on-bg);
+    color: var(--ds-menu-item-on-fg);
+    text-shadow: var(--ds-gel-text-shadow);
+  }
+  .ds-menu-item[data-highlighted] svg,
+  .ds-menu-item[data-selected="true"] svg {
+    color: inherit;
+  }
+
+  .ds-tooltip {
+    background: var(--ds-tooltip-bg);
+    color: var(--ds-tooltip-fg);
+    border: 1px solid var(--ds-tooltip-border);
+    box-shadow: var(--ds-tooltip-shadow);
+    border-radius: var(--ds-tooltip-radius);
+  }
+}
+
+/* Gel scrollbars for themes that opt in. */
+html[data-scrollbars="gel"] ::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+html[data-scrollbars="gel"] ::-webkit-scrollbar-track {
+  background: var(--ds-scroll-track);
+  box-shadow: inset 1px 0 2px rgb(0 0 0 / 0.18);
+  border-radius: 7px;
+}
+html[data-scrollbars="gel"] ::-webkit-scrollbar-thumb {
+  background: var(--ds-scroll-thumb);
+  border: 1px solid var(--ds-gel-border);
+  border-radius: 7px;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.6);
+}
+html[data-scrollbars="gel"] ::-webkit-scrollbar-corner {
+  background: transparent;
+}
