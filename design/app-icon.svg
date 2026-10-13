@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- macOS icon grid: 824×824 body centred on a 1024 canvas, continuous-corner radius ~185. -->
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b8cf0"/>
+      <stop offset="1" stop-color="#1d5fd0"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#body)"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#sheen)"/>
+  <!-- Braces around a chevron: code tools. -->
+  <g fill="none" stroke="#ffffff" stroke-width="54" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M392 300 C330 300 318 330 318 380 L318 456 C318 492 300 512 262 512 C300 512 318 532 318 568 L318 644 C318 694 330 724 392 724"/>
+    <path d="M632 300 C694 300 706 330 706 380 L706 456 C706 492 724 512 762 512 C724 512 706 532 706 568 L706 644 C706 694 694 724 632 724"/>
+    <path d="M452 436 L528 512 L452 588" stroke-opacity="0.95"/>
+    <path d="M556 588 L604 588" stroke-opacity="0.95"/>
+  </g>
+</svg>
