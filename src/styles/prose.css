@@ -1,0 +1,31 @@
+/* Rendered Markdown and HTML content. Uses theme tokens, so it follows every style. */
+@layer components {
+  .ds-prose {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--foreground);
+    overflow-wrap: anywhere;
+  }
+  .ds-prose > :first-child { margin-top: 0; }
+  .ds-prose :is(h1, h2, h3, h4) { font-weight: 650; line-height: 1.25; margin: 1.4em 0 0.5em; }
+  .ds-prose h1 { font-size: 1.9em; }
+  .ds-prose h2 { font-size: 1.45em; padding-bottom: 0.25em; box-shadow: 0 1px 0 var(--border); }
+  .ds-prose h3 { font-size: 1.2em; }
+  .ds-prose :is(p, ul, ol, blockquote, pre, table) { margin: 0.75em 0; }
+  .ds-prose :is(ul, ol) { padding-left: 1.5em; }
+  .ds-prose ul { list-style: disc; }
+  .ds-prose ol { list-style: decimal; }
+  .ds-prose li + li { margin-top: 0.2em; }
+  .ds-prose a { color: var(--ds-accent); text-decoration: underline; text-underline-offset: 2px; }
+  .ds-prose code { font-family: var(--font-mono); font-size: 0.88em; background: var(--field); padding: 0.1em 0.35em; border-radius: 5px; }
+  .ds-prose pre { background: var(--field); padding: 0.8em 1em; border-radius: 8px; overflow-x: auto; }
+  .ds-prose pre code { background: none; padding: 0; }
+  .ds-prose blockquote { padding-left: 1em; color: var(--muted-foreground); box-shadow: inset 3px 0 0 var(--border); }
+  .ds-prose hr { margin: 1.5em 0; border: 0; height: 1px; background: var(--border); }
+  .ds-prose table { border-collapse: collapse; display: block; overflow-x: auto; }
+  .ds-prose :is(th, td) { padding: 0.35em 0.75em; text-align: left; }
+  .ds-prose th { font-weight: 600; }
+  .ds-prose tr:nth-child(even) td { background: var(--ds-table-stripe); }
+  .ds-prose img { max-width: 100%; border-radius: 6px; }
+  .ds-prose input[type="checkbox"] { margin-right: 0.4em; }
+}

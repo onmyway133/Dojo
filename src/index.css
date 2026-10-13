@@ -6,6 +6,7 @@
 @import "./styles/themes/aqua.css";
 @import "./styles/themes/macos.css";
 @import "./styles/skins.css";
+@import "./styles/prose.css";
 
 @custom-variant dark (&:is(.dark *));
 

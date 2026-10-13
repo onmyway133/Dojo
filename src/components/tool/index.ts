@@ -1,6 +1,7 @@
 export { ClearButton, CopyButton, InputActions, OpenTextFileButton, PasteButton, SampleButton } from "./actions";
 export { Chip } from "./Chip";
 export { CodeEditor } from "./CodeEditor";
+export { DiffEditor } from "./DiffEditor";
 export { FieldList, FieldRow } from "./FieldRow";
 export { FileDropZone } from "./FileDropZone";
 export { IconAction } from "./IconAction";
