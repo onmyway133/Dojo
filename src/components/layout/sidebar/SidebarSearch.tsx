@@ -17,7 +17,7 @@ export function SidebarSearch({ onSubmit }: SidebarSearchProps) {
 
   return (
     <div className="relative">
-      <Search className="pointer-events-none absolute top-1/2 left-2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+      <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-(--ds-search-placeholder)" />
       <input
         ref={inputRef}
         value={query}
@@ -28,14 +28,14 @@ export function SidebarSearch({ onSubmit }: SidebarSearchProps) {
         }}
         placeholder="Search"
         spellCheck={false}
-        className="ds-field h-7 w-full rounded-full! pr-7 pl-7 text-[13px] outline-none placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="ds-search h-[30px] w-full pr-8 pl-8.5 text-[14px] outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       />
       {query && (
         <button
           type="button"
           aria-label="Clear search"
           onClick={() => setQuery("")}
-          className="absolute top-1/2 right-1.5 flex size-4 -translate-y-1/2 items-center justify-center rounded-full bg-muted-foreground/40 text-background hover:bg-muted-foreground/60"
+          className="absolute top-1/2 right-2 flex size-4 -translate-y-1/2 items-center justify-center rounded-full bg-muted-foreground/40 text-background hover:bg-muted-foreground/60"
         >
           <X className="size-2.5" strokeWidth={3} />
         </button>

@@ -5,6 +5,11 @@
  * (dark); light values follow the same structure.
  */
 :root[data-style="macos"] {
+  /* Glass capsule like the System Settings search field. */
+  --ds-search-bg: rgb(255 255 255 / 0.65);
+  --ds-search-border: rgb(0 0 0 / 0.08);
+  --ds-search-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), 0 1px 2px rgb(0 0 0 / 0.06);
+  --ds-search-placeholder: #86868b;
   --ds-font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
 
   --background: #f6f6f7;
@@ -220,6 +225,10 @@
 }
 
 :root[data-style="macos"].dark {
+  --ds-search-bg: rgb(255 255 255 / 0.1);
+  --ds-search-border: rgb(255 255 255 / 0.14);
+  --ds-search-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px rgb(0 0 0 / 0.2);
+  --ds-search-placeholder: #9a9aa0;
   --background: #1e1e1f;
   --foreground: #f2f2f3;
   --card: #2a2a2c;

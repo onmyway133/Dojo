@@ -3,6 +3,10 @@
  * sidebar shows the window's vibrancy material inside the app.
  */
 :root[data-style="flat"] {
+  --ds-search-bg: var(--ds-field-bg);
+  --ds-search-border: var(--ds-field-border);
+  --ds-search-shadow: var(--ds-field-shadow);
+  --ds-search-placeholder: var(--muted-foreground);
   --ds-glass-blur: none;
   --ds-sidebar-item-height: 28px;
   --ds-switch-w: 32px;

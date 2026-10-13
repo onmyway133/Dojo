@@ -186,6 +186,18 @@
     background: var(--ds-field-hover-bg);
   }
 
+  /* Search fields (sidebar, filters). Themes can make them glass capsules. */
+  .ds-search {
+    background: var(--ds-search-bg);
+    color: var(--foreground);
+    border: 1px solid var(--ds-search-border);
+    box-shadow: var(--ds-search-shadow);
+    border-radius: 999px;
+  }
+  .ds-search::placeholder {
+    color: var(--ds-search-placeholder);
+  }
+
   /* Pop-up button: a control with an arrow box on the right. */
   .ds-popup {
     position: relative;

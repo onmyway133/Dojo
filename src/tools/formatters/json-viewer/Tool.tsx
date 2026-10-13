@@ -67,7 +67,7 @@ export default function JsonViewerTool() {
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
                   placeholder="Filter keys and values"
-                  className="ds-field h-6 w-48 rounded-full! pr-2 pl-7 text-[12px] outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+                  className="ds-search h-7 w-52 pr-2 pl-7 text-[12px] outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
                 />
               </div>
               <IconAction label="Expand All" onClick={() => setExpanded(containerPaths(root))} disabled={root === undefined}>
