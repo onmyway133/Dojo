@@ -62,7 +62,7 @@ export function Segmented<T extends string>({
         <ToggleGroup.Item
           key={choice.value}
           value={choice.value}
-          className="ds-segment h-[22px] px-2.5 text-[12px] font-medium whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+          className="ds-segment h-[26px] px-3 text-[13px] font-medium whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
         >
           {choice.label}
         </ToggleGroup.Item>
@@ -84,7 +84,7 @@ export function OptionSelect<T extends string>({
 }) {
   return (
     <Select value={value} onValueChange={(next) => onChange(next as T)}>
-      <SelectTrigger size="sm" className={cn("h-7 min-w-28 text-[13px]", className)}>
+      <SelectTrigger className={cn("min-w-28 text-[13px]", className)}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

@@ -8,7 +8,7 @@ export function Chip({ selected, className, ...props }: ComponentProps<"button">
       type="button"
       data-selected={selected ? "true" : undefined}
       className={cn(
-        "ds-chip h-6 rounded-full px-3 text-[12px] font-medium whitespace-nowrap outline-none",
+        "ds-chip h-7 rounded-full px-3.5 text-[13px] font-medium whitespace-nowrap outline-none",
         "focus-visible:ring-2 focus-visible:ring-ring/60",
         className,
       )}

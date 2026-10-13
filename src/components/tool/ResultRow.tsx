@@ -9,11 +9,13 @@ interface ResultRowProps {
   mono?: boolean;
   /** Shown instead of `value` (e.g. a formatted variant), `value` is still what gets copied. */
   display?: ReactNode;
+  /** Narrow label column for short labels such as row numbers. */
+  compact?: boolean;
   className?: string;
 }
 
 /** One labelled output with a copy button, for tools that show many results at once. */
-export function ResultRow({ label, value, mono, display, className }: ResultRowProps) {
+export function ResultRow({ label, value, mono, display, compact, className }: ResultRowProps) {
   return (
     <div
       className={cn(
@@ -21,7 +23,7 @@ export function ResultRow({ label, value, mono, display, className }: ResultRowP
         className,
       )}
     >
-      <div className="w-32 shrink-0 text-[13px] text-muted-foreground">{label}</div>
+      <div className={cn("shrink-0 text-[13px] text-muted-foreground", compact ? "w-7 text-right tabular-nums" : "w-32")}>{label}</div>
       <div
         className={cn(
           "min-w-0 flex-1 text-[13px] whitespace-pre-wrap select-text [overflow-wrap:anywhere]",

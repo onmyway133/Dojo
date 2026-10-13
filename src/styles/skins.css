@@ -307,6 +307,20 @@
     background: var(--ds-switch-thumb-on-bg, var(--ds-switch-thumb-bg));
   }
 
+  /* Sliders reuse the switch track and thumb so every theme styles them for free. */
+  .ds-slider-track {
+    background: var(--ds-switch-bg);
+    box-shadow: var(--ds-switch-shadow);
+  }
+  .ds-slider-range {
+    background: var(--ds-switch-on-bg);
+  }
+  .ds-slider-thumb {
+    background: var(--ds-switch-thumb-on-bg, var(--ds-switch-thumb-bg));
+    border: 1px solid var(--ds-switch-thumb-border);
+    box-shadow: var(--ds-switch-thumb-shadow);
+  }
+
   .ds-checkbox {
     background: var(--ds-checkbox-bg);
     border: 1px solid var(--ds-checkbox-border);
