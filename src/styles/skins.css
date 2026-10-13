@@ -162,6 +162,31 @@
   .ds-button[data-variant="ghost"]:hover {
     background: var(--ds-tool-hover-bg);
   }
+  /* Text buttons in panel headers (Regenerate, Save…): a soft capsule, not bare text. */
+  .ds-button[data-variant="ghost"]:not([data-size^="icon"]) {
+    background: var(--ds-tool-text-bg);
+  }
+  .ds-button[data-variant="ghost"]:not([data-size^="icon"]):hover {
+    background: var(--ds-tool-text-hover-bg);
+  }
+  /* Title bar buttons, drawn as glass in the macOS style. */
+  .ds-button[data-variant="toolbar"] {
+    background: var(--ds-toolbar-button-bg);
+    color: var(--ds-tool-fg);
+    border-color: var(--ds-toolbar-button-border);
+    box-shadow: var(--ds-toolbar-button-shadow);
+    text-shadow: none;
+    border-radius: 999px;
+    backdrop-filter: var(--ds-glass-blur);
+    -webkit-backdrop-filter: var(--ds-glass-blur);
+  }
+  .ds-button[data-variant="toolbar"]::before {
+    opacity: var(--ds-tool-shine-opacity);
+  }
+  .ds-button[data-variant="toolbar"]:hover {
+    background: var(--ds-toolbar-button-hover-bg);
+  }
+
   .ds-button[data-variant="link"] {
     background: none;
     border-color: transparent;

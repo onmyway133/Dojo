@@ -3,6 +3,12 @@
  * sidebar shows the window's vibrancy material inside the app.
  */
 :root[data-style="flat"] {
+  --ds-tool-text-bg: transparent;
+  --ds-tool-text-hover-bg: var(--ds-tool-hover-bg);
+  --ds-toolbar-button-bg: transparent;
+  --ds-toolbar-button-hover-bg: var(--ds-tool-hover-bg);
+  --ds-toolbar-button-border: transparent;
+  --ds-toolbar-button-shadow: none;
   --ds-search-bg: var(--ds-field-bg);
   --ds-search-border: var(--ds-field-border);
   --ds-search-shadow: var(--ds-field-shadow);

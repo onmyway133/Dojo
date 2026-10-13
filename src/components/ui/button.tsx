@@ -14,6 +14,7 @@ const buttonVariants = cva(
         outline: "",
         secondary: "",
         ghost: "",
+        toolbar: "",
         destructive: "",
         link: "underline-offset-4 hover:underline",
       },

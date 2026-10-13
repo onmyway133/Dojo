@@ -34,7 +34,10 @@ export function ToolPage({ children, actions, layout = "fill", className }: Tool
           <>
             {actions}
             <IconAction
+              variant="toolbar"
+              size="icon"
               label={favorite ? "Remove from Favorites" : "Add to Favorites"}
+              aria-pressed={favorite}
               onClick={() => toggleFavorite(meta.id)}
             >
               <Star className={cn(favorite && "fill-warning text-warning")} />
