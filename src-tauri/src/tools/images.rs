@@ -47,7 +47,9 @@ fn open(path: &Path) -> AppResult<(DynamicImage, Option<ImageFormat>)> {
         .with_guessed_format()
         .map_err(|e| AppError::invalid(e.to_string()))?;
     let format = reader.format();
-    let image = reader.decode().map_err(|e| AppError::invalid(format!("Can't decode the image: {e}")))?;
+    let image = reader
+        .decode()
+        .map_err(|e| AppError::invalid(format!("Can't decode the image: {e}")))?;
     Ok((image, format))
 }
 
@@ -56,7 +58,9 @@ pub fn info(path: &Path) -> AppResult<ImageInfo> {
     Ok(ImageInfo {
         width: image.width(),
         height: image.height(),
-        format: format.map(|f| format!("{f:?}").to_uppercase()).unwrap_or_else(|| "Unknown".into()),
+        format: format
+            .map(|f| format!("{f:?}").to_uppercase())
+            .unwrap_or_else(|| "Unknown".into()),
         bytes: std::fs::metadata(path)?.len(),
     })
 }
@@ -72,7 +76,9 @@ fn encode(image: &DynamicImage, format: OutputFormat, quality: u8) -> AppResult<
                 .map_err(|e| AppError::invalid(e.to_string()))?;
         }
         OutputFormat::Ico if image.width() > 256 || image.height() > 256 => {
-            return Err(AppError::invalid("ICO images can be at most 256×256; resize first"));
+            return Err(AppError::invalid(
+                "ICO images can be at most 256×256; resize first",
+            ));
         }
         other => image
             .write_to(&mut out, other.image_format())
@@ -125,13 +131,22 @@ pub fn compress(source: &Path, dest: &Path, level: u8, quality: u8) -> AppResult
     let data = match format {
         Some(ImageFormat::Png) => {
             let options = oxipng::Options::from_preset(level.clamp(1, 6));
-            oxipng::optimize_from_memory(&original, &options).map_err(|e| AppError::invalid(e.to_string()))?
+            oxipng::optimize_from_memory(&original, &options)
+                .map_err(|e| AppError::invalid(e.to_string()))?
         }
         Some(ImageFormat::Jpeg) => encode(&image, OutputFormat::Jpeg, quality)?,
-        _ => return Err(AppError::invalid("Compression supports PNG and JPEG images")),
+        _ => {
+            return Err(AppError::invalid(
+                "Compression supports PNG and JPEG images",
+            ));
+        }
     };
     // Never write a bigger file than the original.
-    let data = if data.len() < original.len() { data } else { original.clone() };
+    let data = if data.len() < original.len() {
+        data
+    } else {
+        original.clone()
+    };
     std::fs::write(dest, &data)?;
     Ok(WriteResult {
         width: image.width(),
@@ -147,7 +162,9 @@ mod tests {
 
     fn sample(dir: &Path) -> std::path::PathBuf {
         let path = dir.join("sample.png");
-        let image = image::RgbaImage::from_fn(64, 32, |x, y| image::Rgba([(x * 4) as u8, (y * 8) as u8, 128, 255]));
+        let image = image::RgbaImage::from_fn(64, 32, |x, y| {
+            image::Rgba([(x * 4) as u8, (y * 8) as u8, 128, 255])
+        });
         image.save(&path).unwrap();
         path
     }
@@ -159,7 +176,17 @@ mod tests {
         let source = sample(&dir);
 
         let jpeg = dir.join("out.jpg");
-        let result = convert(&source, &jpeg, ConvertOptions { format: OutputFormat::Jpeg, width: Some(32), height: None, quality: 80 }).unwrap();
+        let result = convert(
+            &source,
+            &jpeg,
+            ConvertOptions {
+                format: OutputFormat::Jpeg,
+                width: Some(32),
+                height: None,
+                quality: 80,
+            },
+        )
+        .unwrap();
         assert_eq!((result.width, result.height), (32, 16));
         assert_eq!(info(&jpeg).unwrap().format, "JPEG");
 
@@ -167,7 +194,19 @@ mod tests {
         let result = compress(&source, &small, 2, 80).unwrap();
         assert!(result.bytes_after <= result.bytes_before);
 
-        assert!(convert(&source, &dir.join("x.ico"), ConvertOptions { format: OutputFormat::Ico, width: Some(300), height: None, quality: 80 }).is_err());
+        assert!(
+            convert(
+                &source,
+                &dir.join("x.ico"),
+                ConvertOptions {
+                    format: OutputFormat::Ico,
+                    width: Some(300),
+                    height: None,
+                    quality: 80
+                }
+            )
+            .is_err()
+        );
         std::fs::remove_dir_all(dir).unwrap();
     }
 }

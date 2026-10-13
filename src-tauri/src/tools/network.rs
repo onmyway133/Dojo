@@ -79,7 +79,11 @@ pub fn local_addresses() -> AppResult<Vec<LocalAddress>> {
     let mut list: Vec<LocalAddress> = if_addrs::get_if_addrs()?
         .into_iter()
         .filter(|i| !i.is_loopback())
-        .map(|i| LocalAddress { address: i.ip().to_string(), ipv6: i.ip().is_ipv6(), interface: i.name })
+        .map(|i| LocalAddress {
+            address: i.ip().to_string(),
+            ipv6: i.ip().is_ipv6(),
+            interface: i.name,
+        })
         .collect();
     list.sort_by(|a, b| a.ipv6.cmp(&b.ipv6).then(a.interface.cmp(&b.interface)));
     Ok(list)
@@ -92,6 +96,9 @@ mod tests {
     #[test]
     fn lists_local_addresses_without_loopback() {
         let list = local_addresses().unwrap();
-        assert!(list.iter().all(|a| a.address != "127.0.0.1" && a.address != "::1"));
+        assert!(
+            list.iter()
+                .all(|a| a.address != "127.0.0.1" && a.address != "::1")
+        );
     }
 }

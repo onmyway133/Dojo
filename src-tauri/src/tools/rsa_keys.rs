@@ -16,9 +16,12 @@ pub struct KeyPair {
 
 pub fn generate(bits: usize) -> AppResult<KeyPair> {
     if ![1024, 2048, 3072, 4096].contains(&bits) {
-        return Err(AppError::invalid("Key size must be 1024, 2048, 3072 or 4096 bits"));
+        return Err(AppError::invalid(
+            "Key size must be 1024, 2048, 3072 or 4096 bits",
+        ));
     }
-    let private = RsaPrivateKey::new(&mut OsRng, bits).map_err(|e| AppError::invalid(e.to_string()))?;
+    let private =
+        RsaPrivateKey::new(&mut OsRng, bits).map_err(|e| AppError::invalid(e.to_string()))?;
     let public = RsaPublicKey::from(&private);
     Ok(KeyPair {
         private_pem: private

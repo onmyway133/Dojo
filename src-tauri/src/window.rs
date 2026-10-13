@@ -19,7 +19,9 @@ pub fn fit_titlebar_to_traffic_lights(ns_window: tauri::Result<*mut std::ffi::c_
         return;
     };
     // close button -> NSTitlebarView -> NSTitlebarContainerView
-    let Some(container) = (unsafe { close.superview() }).and_then(|view| unsafe { view.superview() }) else {
+    let Some(container) =
+        (unsafe { close.superview() }).and_then(|view| unsafe { view.superview() })
+    else {
         return;
     };
     let zoom_frame = zoom.frame();
@@ -30,4 +32,3 @@ pub fn fit_titlebar_to_traffic_lights(ns_window: tauri::Result<*mut std::ffi::c_
 
 #[cfg(not(target_os = "macos"))]
 pub fn fit_titlebar_to_traffic_lights<T>(_ns_window: T) {}
-

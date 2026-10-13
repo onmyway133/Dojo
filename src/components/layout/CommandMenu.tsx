@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
 import {
   CommandDialog,
@@ -9,14 +8,18 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useHotkey } from "@/hooks/useHotkey";
+import { inTauri } from "@/lib/platform";
+import { useCommandMenu } from "@/stores/commandMenu";
 import { groupByCategory, tools } from "@/tools/registry";
 
 /** ⌘K palette to jump to any tool from the keyboard. */
 export function CommandMenu() {
-  const [open, setOpen] = useState(false);
+  const open = useCommandMenu((s) => s.open);
+  const setOpen = useCommandMenu((s) => s.setOpen);
   const navigate = useNavigate();
 
-  useHotkey({ key: "k", meta: true }, () => setOpen((o) => !o));
+  // In the app the View menu owns ⌘K; this covers the browser during development.
+  useHotkey({ key: "k", meta: true }, () => setOpen(!open), !inTauri);
 
   function openTool(id: string) {
     setOpen(false);

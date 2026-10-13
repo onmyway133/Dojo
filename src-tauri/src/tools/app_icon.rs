@@ -26,11 +26,21 @@ fn slots(platform: Platform) -> Vec<Slot> {
         Platform::Macos => [16, 32, 128, 256, 512]
             .into_iter()
             .flat_map(|points| {
-                [1, 2].map(|scale| Slot { points, scale, idiom: "mac", platform: None })
+                [1, 2].map(|scale| Slot {
+                    points,
+                    scale,
+                    idiom: "mac",
+                    platform: None,
+                })
             })
             .collect(),
         // Xcode 14+ takes a single 1024pt image and derives the rest.
-        Platform::Ios => vec![Slot { points: 1024, scale: 1, idiom: "universal", platform: Some("ios") }],
+        Platform::Ios => vec![Slot {
+            points: 1024,
+            scale: 1,
+            idiom: "universal",
+            platform: Some("ios"),
+        }],
     }
 }
 
@@ -60,11 +70,16 @@ pub struct IconSetResult {
 }
 
 /// Writes `AppIcon.appiconset` (PNG files + Contents.json) into `output_dir`.
-pub fn generate(source: &Path, output_dir: &Path, platforms: &[Platform]) -> AppResult<IconSetResult> {
+pub fn generate(
+    source: &Path,
+    output_dir: &Path,
+    platforms: &[Platform],
+) -> AppResult<IconSetResult> {
     if platforms.is_empty() {
         return Err(AppError::invalid("Choose at least one platform"));
     }
-    let image = image::open(source).map_err(|e| AppError::invalid(format!("Can't read the image: {e}")))?;
+    let image =
+        image::open(source).map_err(|e| AppError::invalid(format!("Can't read the image: {e}")))?;
     let image = square(image);
     let side = image.width();
 
@@ -106,7 +121,9 @@ pub fn generate(source: &Path, output_dir: &Path, platforms: &[Platform]) -> App
     Ok(IconSetResult {
         folder: folder.to_string_lossy().into_owned(),
         files,
-        warning: (side < 1024).then(|| format!("The source is {side}×{side}; use 1024×1024 or larger for sharp icons.")),
+        warning: (side < 1024).then(|| {
+            format!("The source is {side}×{side}; use 1024×1024 or larger for sharp icons.")
+        }),
     })
 }
 
@@ -126,7 +143,8 @@ mod tests {
         assert!(result.warning.is_some());
         let big = image::open(dir.join("AppIcon.appiconset/icon_512x512@2x.png")).unwrap();
         assert_eq!(big.dimensions(), (1024, 1024));
-        let contents = std::fs::read_to_string(dir.join("AppIcon.appiconset/Contents.json")).unwrap();
+        let contents =
+            std::fs::read_to_string(dir.join("AppIcon.appiconset/Contents.json")).unwrap();
         assert!(contents.contains("\"idiom\": \"universal\""));
         std::fs::remove_dir_all(dir).unwrap();
     }

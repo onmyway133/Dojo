@@ -13,9 +13,17 @@ pub async fn generate_rsa_keys(bits: usize) -> AppResult<KeyPair> {
 }
 
 #[tauri::command]
-pub async fn generate_app_icon(source: String, output_dir: String, platforms: Vec<Platform>) -> AppResult<IconSetResult> {
+pub async fn generate_app_icon(
+    source: String,
+    output_dir: String,
+    platforms: Vec<Platform>,
+) -> AppResult<IconSetResult> {
     tauri::async_runtime::spawn_blocking(move || {
-        app_icon::generate(&PathBuf::from(source), &PathBuf::from(output_dir), &platforms)
+        app_icon::generate(
+            &PathBuf::from(source),
+            &PathBuf::from(output_dir),
+            &platforms,
+        )
     })
     .await
     .map_err(|e| AppError::invalid(e.to_string()))?

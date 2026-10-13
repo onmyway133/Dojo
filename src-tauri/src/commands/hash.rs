@@ -32,5 +32,8 @@ pub struct HmacOutput {
 #[tauri::command]
 pub fn hmac(algorithm: HmacAlgorithm, key: String, message: String) -> HmacOutput {
     let bytes = hash::hmac(algorithm, key.as_bytes(), message.as_bytes());
-    HmacOutput { hex: hex::encode(&bytes), base64: STANDARD.encode(&bytes) }
+    HmacOutput {
+        hex: hex::encode(&bytes),
+        base64: STANDARD.encode(&bytes),
+    }
 }

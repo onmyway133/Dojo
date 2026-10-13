@@ -1,6 +1,8 @@
 import { Search, X } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useHotkey } from "@/hooks/useHotkey";
+import { inTauri } from "@/lib/platform";
+import { useCommandMenu } from "@/stores/commandMenu";
 import { useSearch } from "@/stores/search";
 
 interface SidebarSearchProps {
@@ -13,7 +15,13 @@ export function SidebarSearch({ onSubmit }: SidebarSearchProps) {
   const setQuery = useSearch((s) => s.setQuery);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useHotkey({ key: "f", meta: true }, () => inputRef.current?.select());
+  const focusRequest = useCommandMenu((s) => s.focusSearch);
+
+  // ⌘⇧F: plain ⌘F stays with the code editors' own find. The menu owns it in the app.
+  useHotkey({ key: "f", meta: true, shift: true }, () => inputRef.current?.select(), !inTauri);
+  useEffect(() => {
+    if (focusRequest > 0) inputRef.current?.select();
+  }, [focusRequest]);
 
   return (
     <div className="relative">

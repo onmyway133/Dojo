@@ -8,12 +8,16 @@ interface Hotkey {
   alt?: boolean;
 }
 
-/** Runs `handler` on a global key combo. ⌘ is `meta` (macOS first). */
-export function useHotkey(hotkey: Hotkey, handler: (event: KeyboardEvent) => void) {
+/**
+ * Runs `handler` on a global key combo. ⌘ is `meta` (macOS first). Pass `enabled: false`
+ * when the native menu owns the shortcut, so it doesn't fire twice.
+ */
+export function useHotkey(hotkey: Hotkey, handler: (event: KeyboardEvent) => void, enabled = true) {
   const { key, meta = false, shift = false, alt = false } = hotkey;
   const onMatch = useEffectEvent(handler);
 
   useEffect(() => {
+    if (!enabled) return;
     function onKeyDown(event: KeyboardEvent) {
       if (
         event.key.toLowerCase() === key.toLowerCase() &&
@@ -27,5 +31,5 @@ export function useHotkey(hotkey: Hotkey, handler: (event: KeyboardEvent) => voi
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [key, meta, shift, alt]);
+  }, [key, meta, shift, alt, enabled]);
 }

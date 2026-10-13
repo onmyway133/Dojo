@@ -34,13 +34,16 @@ pub fn parse_pem_bundle(input: &str) -> AppResult<Vec<CertificateInfo>> {
         certificates.push(describe(&pem.contents)?);
     }
     if certificates.is_empty() {
-        return Err(AppError::invalid("No PEM certificate found. Paste text starting with -----BEGIN CERTIFICATE-----"));
+        return Err(AppError::invalid(
+            "No PEM certificate found. Paste text starting with -----BEGIN CERTIFICATE-----",
+        ));
     }
     Ok(certificates)
 }
 
 fn describe(der: &[u8]) -> AppResult<CertificateInfo> {
-    let (_, cert) = X509Certificate::from_der(der).map_err(|e| AppError::invalid(format!("Invalid certificate: {e}")))?;
+    let (_, cert) = X509Certificate::from_der(der)
+        .map_err(|e| AppError::invalid(format!("Invalid certificate: {e}")))?;
 
     let subject_alt_names = match cert.subject_alternative_name() {
         Ok(Some(san)) => san.value.general_names.iter().map(general_name).collect(),
@@ -69,7 +72,10 @@ fn general_name(name: &GeneralName) -> String {
         GeneralName::RFC822Name(email) => format!("Email: {email}"),
         GeneralName::URI(uri) => format!("URI: {uri}"),
         GeneralName::IPAddress(bytes) => match bytes.len() {
-            4 => format!("IP: {}", std::net::Ipv4Addr::new(bytes[0], bytes[1], bytes[2], bytes[3])),
+            4 => format!(
+                "IP: {}",
+                std::net::Ipv4Addr::new(bytes[0], bytes[1], bytes[2], bytes[3])
+            ),
             16 => {
                 let octets: [u8; 16] = (*bytes).try_into().unwrap_or([0; 16]);
                 format!("IP: {}", std::net::Ipv6Addr::from(octets))
@@ -119,8 +125,14 @@ mod tests {
         assert!(cert.subject.contains("CN=devtools.test"));
         assert_eq!(cert.subject, cert.issuer);
         assert_eq!(cert.public_key, "EC 256 bits");
-        assert!(cert.subject_alt_names.contains(&"DNS: www.devtools.test".to_string()));
-        assert!(cert.subject_alt_names.contains(&"IP: 127.0.0.1".to_string()));
+        assert!(
+            cert.subject_alt_names
+                .contains(&"DNS: www.devtools.test".to_string())
+        );
+        assert!(
+            cert.subject_alt_names
+                .contains(&"IP: 127.0.0.1".to_string())
+        );
         // Matches `openssl x509 -noout -fingerprint -sha256`.
         assert!(cert.sha256.starts_with("E8:9E:48:92:19:BC"));
     }

@@ -1,5 +1,6 @@
 mod commands;
 mod error;
+mod menu;
 mod tools;
 mod window;
 
@@ -63,6 +64,8 @@ pub fn run() {
             }
             Ok(())
         })
+        .menu(|app| menu::build(app))
+        .on_menu_event(|app, event| menu::handle(app, event.id().as_ref()))
         .on_window_event(|window, event| {
             // AppKit stretches the title bar container again on every resize.
             if let tauri::WindowEvent::Resized(_) = event {

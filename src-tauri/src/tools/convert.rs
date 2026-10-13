@@ -4,30 +4,44 @@ use toml::Value as Toml;
 use crate::error::{AppError, AppResult};
 
 pub fn json_to_toml(input: &str) -> AppResult<String> {
-    let json: Json = serde_json::from_str(input).map_err(|e| AppError::invalid(format!("Invalid JSON: {e}")))?;
+    let json: Json =
+        serde_json::from_str(input).map_err(|e| AppError::invalid(format!("Invalid JSON: {e}")))?;
     let Json::Object(_) = json else {
-        return Err(AppError::invalid("TOML needs a JSON object at the top level"));
+        return Err(AppError::invalid(
+            "TOML needs a JSON object at the top level",
+        ));
     };
     let toml = json_value_to_toml(json)?;
     toml::to_string_pretty(&toml).map_err(|e| AppError::invalid(e.to_string()))
 }
 
 pub fn toml_to_json(input: &str, indent: usize) -> AppResult<String> {
-    let table: toml::Table = input.parse().map_err(|e: toml::de::Error| AppError::invalid(e.to_string()))?;
+    let table: toml::Table = input
+        .parse()
+        .map_err(|e: toml::de::Error| AppError::invalid(e.to_string()))?;
     let json = toml_value_to_json(Toml::Table(table));
     pretty_json(&json, indent)
 }
 
 fn json_value_to_toml(value: Json) -> AppResult<Toml> {
     Ok(match value {
-        Json::Null => return Err(AppError::invalid("TOML has no null; remove or replace null values")),
+        Json::Null => {
+            return Err(AppError::invalid(
+                "TOML has no null; remove or replace null values",
+            ));
+        }
         Json::Bool(b) => Toml::Boolean(b),
         Json::Number(n) => match n.as_i64() {
             Some(i) => Toml::Integer(i),
             None => Toml::Float(n.as_f64().unwrap_or(f64::NAN)),
         },
         Json::String(s) => Toml::String(s),
-        Json::Array(items) => Toml::Array(items.into_iter().map(json_value_to_toml).collect::<AppResult<_>>()?),
+        Json::Array(items) => Toml::Array(
+            items
+                .into_iter()
+                .map(json_value_to_toml)
+                .collect::<AppResult<_>>()?,
+        ),
         Json::Object(map) => Toml::Table(
             map.into_iter()
                 .map(|(k, v)| Ok((k, json_value_to_toml(v)?)))
@@ -45,7 +59,12 @@ fn toml_value_to_json(value: Toml) -> Json {
         Toml::Boolean(b) => Json::Bool(b),
         Toml::Datetime(d) => Json::String(d.to_string()),
         Toml::Array(items) => Json::Array(items.into_iter().map(toml_value_to_json).collect()),
-        Toml::Table(table) => Json::Object(table.into_iter().map(|(k, v)| (k, toml_value_to_json(v))).collect()),
+        Toml::Table(table) => Json::Object(
+            table
+                .into_iter()
+                .map(|(k, v)| (k, toml_value_to_json(v)))
+                .collect(),
+        ),
     }
 }
 
@@ -54,7 +73,8 @@ fn pretty_json(value: &Json, indent: usize) -> AppResult<String> {
     let formatter = serde_json::ser::PrettyFormatter::with_indent(indent.as_bytes());
     let mut out = Vec::new();
     let mut serializer = serde_json::Serializer::with_formatter(&mut out, formatter);
-    serde::Serialize::serialize(value, &mut serializer).map_err(|e| AppError::invalid(e.to_string()))?;
+    serde::Serialize::serialize(value, &mut serializer)
+        .map_err(|e| AppError::invalid(e.to_string()))?;
     String::from_utf8(out).map_err(|e| AppError::invalid(e.to_string()))
 }
 
@@ -65,9 +85,15 @@ mod tests {
     #[test]
     fn json_round_trip_keeps_order() {
         let toml = json_to_toml(r#"{"name":"app","version":2,"deps":{"serde":"1"}}"#).unwrap();
-        assert_eq!(toml, "name = \"app\"\nversion = 2\n\n[deps]\nserde = \"1\"\n");
+        assert_eq!(
+            toml,
+            "name = \"app\"\nversion = 2\n\n[deps]\nserde = \"1\"\n"
+        );
         let json = toml_to_json(&toml, 2).unwrap();
-        assert_eq!(json, "{\n  \"name\": \"app\",\n  \"version\": 2,\n  \"deps\": {\n    \"serde\": \"1\"\n  }\n}");
+        assert_eq!(
+            json,
+            "{\n  \"name\": \"app\",\n  \"version\": 2,\n  \"deps\": {\n    \"serde\": \"1\"\n  }\n}"
+        );
     }
 
     #[test]

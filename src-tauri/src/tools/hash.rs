@@ -90,13 +90,19 @@ pub fn hash_all(data: &[u8]) -> Vec<HashOutput> {
         .map(|&algorithm| {
             let mut hasher = Hasher::new(algorithm);
             hasher.update(data);
-            HashOutput { algorithm, hex: hasher.finish_hex() }
+            HashOutput {
+                algorithm,
+                hex: hasher.finish_hex(),
+            }
         })
         .collect()
 }
 
 /// Streams a reader once, feeding all requested algorithms in parallel.
-pub fn hash_reader(mut reader: impl Read, algorithms: &[Algorithm]) -> std::io::Result<Vec<HashOutput>> {
+pub fn hash_reader(
+    mut reader: impl Read,
+    algorithms: &[Algorithm],
+) -> std::io::Result<Vec<HashOutput>> {
     let mut hashers: Vec<_> = algorithms.iter().map(|&a| (a, Hasher::new(a))).collect();
     let mut buffer = vec![0u8; 1 << 16];
     loop {
@@ -110,7 +116,10 @@ pub fn hash_reader(mut reader: impl Read, algorithms: &[Algorithm]) -> std::io::
     }
     Ok(hashers
         .into_iter()
-        .map(|(algorithm, hasher)| HashOutput { algorithm, hex: hasher.finish_hex() })
+        .map(|(algorithm, hasher)| HashOutput {
+            algorithm,
+            hex: hasher.finish_hex(),
+        })
         .collect())
 }
 
@@ -164,7 +173,11 @@ mod tests {
 
     #[test]
     fn hmac_sha256_rfc4231_case2() {
-        let mac = hmac(HmacAlgorithm::Sha256, b"Jefe", b"what do ya want for nothing?");
+        let mac = hmac(
+            HmacAlgorithm::Sha256,
+            b"Jefe",
+            b"what do ya want for nothing?",
+        );
         assert_eq!(
             hex::encode(mac),
             "5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843"
