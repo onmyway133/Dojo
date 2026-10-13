@@ -43,6 +43,7 @@ oxipng = { version = "10.2.1", default-features = false }
 reqwest = { version = "0.13.5", default-features = false, features = ["json", "native-tls"] }
 if-addrs = "0.15.0"
 tauri-plugin-process = "2"
+bcrypt = "0.19.3"
 
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
@@ -52,6 +53,11 @@ lto = true
 opt-level = 3
 panic = "abort"
 strip = true
+
+# Proc macros and build scripts must keep their metadata; stripping them makes rustc
+# report "can't find crate" with the Xcode 27 linker. The app binary is still stripped.
+[profile.release.build-override]
+strip = false
 
 # Dependencies (RSA, image codecs) are unusably slow unoptimized; keep our own crate fast to rebuild.
 [profile.dev.package."*"]
