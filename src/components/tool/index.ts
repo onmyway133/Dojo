@@ -4,6 +4,7 @@ export { CodeEditor } from "./CodeEditor";
 export { FieldList, FieldRow } from "./FieldRow";
 export { FileDropZone } from "./FileDropZone";
 export { IconAction } from "./IconAction";
+export { ImagePreview } from "./ImagePreview";
 export { Option, OptionSelect, OptionSwitch, Segmented, ToolOptions, type Choice } from "./options";
 export { PageHeader } from "./PageHeader";
 export { ResultList, ResultRow } from "./ResultRow";

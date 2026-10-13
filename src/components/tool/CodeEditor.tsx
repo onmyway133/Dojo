@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
 import { useSettings } from "@/stores/settings";
 import { editorTheme } from "./editorTheme";
 
+// Without a gutter the text would touch the section edge.
+const plainPadding = EditorView.theme({ ".cm-content": { paddingLeft: "10px", paddingRight: "10px" } });
+
 interface CodeEditorProps {
   value: string;
   onChange?: (value: string) => void;
@@ -38,10 +41,11 @@ export function CodeEditor({
       editorTheme,
       EditorView.theme({ ".cm-scroller": { fontSize: `${fontSize}px` } }),
       ...(wrap ? [EditorView.lineWrapping] : []),
+      ...(lineNumbers ? [] : [plainPadding]),
       ...(language ? [language] : []),
       ...(extensions ?? []),
     ],
-    [fontSize, wrap, language, extensions],
+    [fontSize, wrap, lineNumbers, language, extensions],
   );
 
   return (
