@@ -36,6 +36,8 @@ pub fn run() {
             commands::encode::gzip_compress,
             commands::encode::gzip_decompress,
             commands::encode::parse_certificates,
+            commands::generate::generate_rsa_keys,
+            commands::generate::generate_app_icon,
         ])
         .setup(|app| {
             #[cfg(debug_assertions)]

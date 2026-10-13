@@ -36,6 +36,9 @@ digest = "0.11"
 toml = { version = "1.1.8", features = ["preserve_order"] }
 flate2 = "1.1.10"
 x509-parser = "0.18.1"
+rsa = { version = "0.9.10", features = ["pem"] }
+image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "gif", "webp", "bmp", "tiff", "ico"] }
+rand_core = { version = "0.6", features = ["getrandom"] }
 
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
@@ -45,3 +48,7 @@ lto = true
 opt-level = 3
 panic = "abort"
 strip = true
+
+# Dependencies (RSA, image codecs) are unusably slow unoptimized; keep our own crate fast to rebuild.
+[profile.dev.package."*"]
+opt-level = 3
