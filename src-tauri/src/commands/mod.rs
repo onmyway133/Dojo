@@ -6,3 +6,4 @@ pub mod files;
 pub mod encode;
 pub mod generate;
 pub mod images;
+pub mod network;

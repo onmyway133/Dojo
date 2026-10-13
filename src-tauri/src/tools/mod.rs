@@ -7,3 +7,4 @@ pub mod gzip;
 pub mod app_icon;
 pub mod rsa_keys;
 pub mod images;
+pub mod network;

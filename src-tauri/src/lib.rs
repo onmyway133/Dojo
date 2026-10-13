@@ -44,6 +44,9 @@ pub fn run() {
             commands::images::image_info,
             commands::images::convert_image,
             commands::images::compress_image,
+            commands::network::public_ip,
+            commands::network::ip_details,
+            commands::network::local_addresses,
         ])
         .setup(|app| {
             #[cfg(debug_assertions)]
