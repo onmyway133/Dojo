@@ -1,25 +1,25 @@
 /*
- * macOS: today's macOS controls. Capsule buttons, raised white segments on a gray
- * track, accent-filled rounded sidebar selection, small switches with a capsule thumb,
- * glass menus, light grouped panels. Calibrated against System Settings on macOS 27
- * (dark); light values follow the same structure.
+ * macOS: today's macOS controls, kept light. Capsule buttons and fields drawn as fills,
+ * white segments on a gray track, accent-filled rounded sidebar selection, small
+ * switches with a capsule thumb, glass menus. No shadows except on floating overlays.
+ * Calibrated against System Settings on macOS 27 (dark); light follows the same structure.
  */
 :root[data-style="macos"] {
   /* Text buttons: light capsules. Title bar buttons: glass circles like System Settings. */
   --ds-tool-text-bg: rgb(0 0 0 / 0.05);
   --ds-tool-text-hover-bg: rgb(0 0 0 / 0.08);
-  --ds-toolbar-button-bg: rgb(255 255 255 / 0.72);
-  --ds-toolbar-button-hover-bg: rgb(255 255 255 / 0.92);
-  --ds-toolbar-button-border: rgb(0 0 0 / 0.08);
-  --ds-toolbar-button-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 1px 3px rgb(0 0 0 / 0.1);
+  --ds-toolbar-button-bg: rgb(0 0 0 / 0.05);
+  --ds-toolbar-button-hover-bg: rgb(0 0 0 / 0.09);
+  --ds-toolbar-button-border: transparent;
+  --ds-toolbar-button-shadow: none;
   /* Glass capsule like the System Settings search field. */
-  --ds-search-bg: rgb(255 255 255 / 0.65);
-  --ds-search-border: rgb(0 0 0 / 0.08);
-  --ds-search-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), 0 1px 2px rgb(0 0 0 / 0.06);
+  --ds-search-bg: rgb(0 0 0 / 0.06);
+  --ds-search-border: transparent;
+  --ds-search-shadow: none;
   --ds-search-placeholder: #86868b;
   --ds-font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
 
-  --background: #f6f6f7;
+  --background: #f3f3f5;
   --foreground: #1d1d1f;
   --card: #ffffff;
   --card-foreground: var(--foreground);
@@ -54,9 +54,6 @@
   --ds-emboss: none;
   --ds-hover-filter: none;
   --ds-active-filter: brightness(0.96);
-  --ds-shine: none;
-  --ds-shine-soft: none;
-  --hairline: 0 0 0 0.5px rgb(0 0 0 / 0.12);
 
   --ds-sidebar-bg: #ececee;
   --ds-sidebar-fg: var(--foreground);
@@ -81,7 +78,7 @@
 
   --ds-panel-bg: #ffffff;
   --ds-panel-border: transparent;
-  --ds-panel-shadow: var(--hairline), 0 1px 2px rgb(0 0 0 / 0.04);
+  --ds-panel-shadow: none;
   --ds-panel-radius: 13px;
   --ds-panel-title-fg: var(--foreground);
 
@@ -92,27 +89,27 @@
   --ds-well-inset: 0;
 
   --ds-card-bg: #ffffff;
-  --ds-card-hover-bg: #ffffff;
+  --ds-card-hover-bg: #fafafa;
   --ds-card-border: transparent;
-  --ds-card-shadow: var(--hairline), 0 1px 2px rgb(0 0 0 / 0.05);
+  --ds-card-shadow: none;
   --ds-row-hover-bg: rgb(0 0 0 / 0.04);
   --ds-table-stripe: rgb(0 0 0 / 0.03);
 
-  /* Push buttons: white capsules lifted by a hairline and a soft shadow. */
-  --ds-control-bg: #ffffff;
-  --ds-control-hover-bg: #fbfbfb;
+  /* Push buttons: soft gray capsules. */
+  --ds-control-bg: rgb(0 0 0 / 0.055);
+  --ds-control-hover-bg: rgb(0 0 0 / 0.085);
   --ds-control-fg: var(--foreground);
   --ds-control-border: transparent;
-  --ds-control-shadow: var(--hairline), 0 1px 1.5px rgb(0 0 0 / 0.1);
+  --ds-control-shadow: none;
   --ds-control-text-shadow: none;
   --ds-control-radius: 999px;
 
-  --ds-gel-bg: var(--ds-accent);
-  --ds-gel-selected-bg: var(--ds-accent);
-  --ds-gel-fg: #ffffff;
-  --ds-gel-border: transparent;
-  --ds-gel-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.25), 0 1px 2px color-mix(in oklab, var(--ds-accent) 35%, transparent);
-  --ds-gel-text-shadow: none;
+  --ds-prominent-bg: var(--ds-accent);
+  --ds-prominent-selected-bg: var(--ds-accent);
+  --ds-prominent-fg: #ffffff;
+  --ds-prominent-border: transparent;
+  --ds-prominent-shadow: none;
+  --ds-prominent-text-shadow: none;
   --ds-danger-bg: var(--destructive);
   --ds-danger-fg: #ffffff;
   --ds-danger-border: transparent;
@@ -123,12 +120,11 @@
   --ds-tool-border: transparent;
   --ds-tool-shadow: none;
   --ds-tool-radius: 999px;
-  --ds-tool-shine-opacity: 0;
 
-  --ds-field-bg: #ffffff;
-  --ds-field-hover-bg: #ffffff;
+  --ds-field-bg: rgb(0 0 0 / 0.045);
+  --ds-field-hover-bg: rgb(0 0 0 / 0.045);
   --ds-field-border: transparent;
-  --ds-field-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.16), inset 0 1px 1px rgb(0 0 0 / 0.04);
+  --ds-field-shadow: none;
   --ds-field-radius: 7px;
 
   /* Pop-ups: a light capsule with a round chevron button. */
@@ -156,7 +152,7 @@
   --ds-segment-divider: none;
   --ds-segment-on-bg: #ffffff;
   --ds-segment-on-fg: var(--foreground);
-  --ds-segment-on-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.14);
+  --ds-segment-on-shadow: none;
   --ds-segment-on-text-shadow: none;
 
   --ds-chip-bg: rgb(0 0 0 / 0.05);
@@ -175,18 +171,18 @@
   --ds-switch-thumb-h: 16px;
   --ds-switch-bg: rgb(0 0 0 / 0.1);
   --ds-switch-border: transparent;
-  --ds-switch-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.06);
+  --ds-switch-shadow: none;
   --ds-switch-on-bg: var(--ds-accent);
   --ds-switch-on-border: transparent;
   --ds-switch-on-shadow: none;
   --ds-switch-thumb-bg: #ffffff;
   --ds-switch-thumb-on-bg: #ffffff;
   --ds-switch-thumb-border: transparent;
-  --ds-switch-thumb-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.2);
+  --ds-switch-thumb-shadow: none;
 
-  --ds-checkbox-bg: #ffffff;
+  --ds-checkbox-bg: rgb(0 0 0 / 0.1);
   --ds-checkbox-border: transparent;
-  --ds-checkbox-shadow: var(--hairline), 0 1px 1px rgb(0 0 0 / 0.06);
+  --ds-checkbox-shadow: none;
 
   --ds-badge-bg: rgb(0 0 0 / 0.06);
   --ds-badge-fg: #3a3a3c;
@@ -199,11 +195,11 @@
   --ds-badge-danger-fg: var(--destructive);
   --ds-badge-danger-border: transparent;
 
-  /* Tool icons as small app-style tiles: accent fill, white glyph, a soft top sheen. */
-  --ds-tile-bg: linear-gradient(180deg, color-mix(in oklab, var(--ds-accent) 82%, white), var(--ds-accent));
-  --ds-tile-fg: #ffffff;
+  /* Tool icons: a light accent tint with an accent glyph, flat. */
+  --ds-tile-bg: color-mix(in oklab, var(--ds-accent) 12%, transparent);
+  --ds-tile-fg: var(--ds-accent);
   --ds-tile-border: transparent;
-  --ds-tile-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.35), 0 0 0 0.5px rgb(0 0 0 / 0.08), 0 1px 2px rgb(0 0 0 / 0.12);
+  --ds-tile-shadow: none;
 
   --ds-dropzone-bg: rgb(0 0 0 / 0.035);
   --ds-dropzone-hover-bg: rgb(0 0 0 / 0.06);
@@ -214,14 +210,14 @@
 
   --ds-menu-bg: rgb(248 248 250 / 0.82);
   --ds-menu-border: rgb(0 0 0 / 0.1);
-  --ds-menu-shadow: 0 12px 32px rgb(0 0 0 / 0.18), 0 2px 6px rgb(0 0 0 / 0.08);
+  --ds-menu-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
   --ds-menu-item-on-bg: var(--ds-accent);
   --ds-menu-item-on-fg: #ffffff;
 
   --ds-tooltip-bg: rgb(250 250 252 / 0.92);
   --ds-tooltip-fg: #1d1d1f;
   --ds-tooltip-border: rgb(0 0 0 / 0.1);
-  --ds-tooltip-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+  --ds-tooltip-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
   --ds-tooltip-radius: 6px;
 }
 
@@ -236,11 +232,11 @@
   --ds-tool-text-hover-bg: rgb(255 255 255 / 0.15);
   --ds-toolbar-button-bg: rgb(255 255 255 / 0.08);
   --ds-toolbar-button-hover-bg: rgb(255 255 255 / 0.14);
-  --ds-toolbar-button-border: rgb(255 255 255 / 0.14);
-  --ds-toolbar-button-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px rgb(0 0 0 / 0.3);
+  --ds-toolbar-button-border: transparent;
+  --ds-toolbar-button-shadow: none;
   --ds-search-bg: rgb(255 255 255 / 0.1);
-  --ds-search-border: rgb(255 255 255 / 0.14);
-  --ds-search-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 1px 2px rgb(0 0 0 / 0.2);
+  --ds-search-border: transparent;
+  --ds-search-shadow: none;
   --ds-search-placeholder: #9a9aa0;
   --background: #1e1e1f;
   --foreground: #f2f2f3;
@@ -261,7 +257,6 @@
   --selected: color-mix(in oklab, var(--ds-accent) 30%, transparent);
   --sidebar: #29292b;
   --sidebar-accent: rgb(255 255 255 / 0.06);
-  --hairline: 0 0 0 0.5px rgb(255 255 255 / 0.1);
 
   --ds-body-bg: #29292b;
   --ds-sidebar-bg: #29292b;
@@ -275,17 +270,17 @@
   --ds-row-hover-bg: rgb(255 255 255 / 0.05);
   --ds-table-stripe: rgb(255 255 255 / 0.04);
 
-  --ds-control-bg: rgb(255 255 255 / 0.14);
-  --ds-control-hover-bg: rgb(255 255 255 / 0.18);
-  --ds-control-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.16), 0 1px 1px rgb(0 0 0 / 0.25);
-  --ds-gel-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.25);
+  --ds-control-bg: rgb(255 255 255 / 0.11);
+  --ds-control-hover-bg: rgb(255 255 255 / 0.15);
+  --ds-control-shadow: none;
+  --ds-prominent-shadow: none;
 
   --ds-tool-hover-bg: rgb(255 255 255 / 0.09);
   --ds-tool-fg: #e5e5e7;
 
   --ds-field-bg: rgb(255 255 255 / 0.07);
   --ds-field-hover-bg: rgb(255 255 255 / 0.07);
-  --ds-field-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.12);
+  --ds-field-shadow: none;
 
   --ds-popup-bg: rgb(255 255 255 / 0.08);
   --ds-popup-hover-bg: rgb(255 255 255 / 0.12);
@@ -295,7 +290,7 @@
   --ds-segment-fg: #d1d1d6;
   --ds-segment-hover-fg: #ffffff;
   --ds-segment-on-bg: rgb(255 255 255 / 0.22);
-  --ds-segment-on-shadow: 0 1px 2px rgb(0 0 0 / 0.3);
+  --ds-segment-on-shadow: none;
 
   --ds-chip-bg: rgb(255 255 255 / 0.08);
   --ds-chip-hover-bg: rgb(255 255 255 / 0.12);
@@ -304,10 +299,10 @@
   --ds-switch-shadow: none;
   --ds-switch-thumb-bg: #cfcfd1;
   --ds-switch-thumb-on-bg: #f4f4f5;
-  --ds-switch-thumb-shadow: 0 1px 2px rgb(0 0 0 / 0.35);
+  --ds-switch-thumb-shadow: none;
 
   --ds-checkbox-bg: rgb(255 255 255 / 0.12);
-  --ds-checkbox-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.12);
+  --ds-checkbox-shadow: none;
 
   --ds-badge-bg: rgb(255 255 255 / 0.1);
   --ds-badge-fg: #e5e5e7;
@@ -315,19 +310,20 @@
   --ds-badge-accent-fg: var(--ds-accent-hi);
   --ds-badge-danger-bg: color-mix(in oklab, var(--destructive) 20%, transparent);
 
-  --ds-tile-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.3), 0 1px 2px rgb(0 0 0 / 0.35);
+  --ds-tile-bg: color-mix(in oklab, var(--ds-accent) 22%, transparent);
+  --ds-tile-fg: var(--ds-accent-hi);
 
   --ds-dropzone-bg: rgb(255 255 255 / 0.05);
   --ds-dropzone-hover-bg: rgb(255 255 255 / 0.08);
 
   --ds-menu-bg: rgb(40 40 42 / 0.82);
   --ds-menu-border: rgb(255 255 255 / 0.12);
-  --ds-menu-shadow: 0 12px 32px rgb(0 0 0 / 0.5), 0 2px 6px rgb(0 0 0 / 0.3);
+  --ds-menu-shadow: 0 8px 24px rgb(0 0 0 / 0.35);
 
   --ds-tooltip-bg: rgb(52 52 55 / 0.94);
   --ds-tooltip-fg: #f2f2f3;
   --ds-tooltip-border: rgb(255 255 255 / 0.1);
-  --ds-tooltip-shadow: 0 2px 8px rgb(0 0 0 / 0.4);
+  --ds-tooltip-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
 }
 
 :root[data-style="macos"].dark.tauri {

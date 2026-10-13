@@ -2,33 +2,19 @@
  * Registry of visual styles and accents. A style is a CSS file in src/styles/themes/
  * that sets every `--ds-*` variable for light and dark under `[data-style="<id>"]`.
  * Adding a style: create the CSS file, import it in src/index.css, add an entry here.
+ * The Appearance menu shows a style picker only when there is more than one.
  */
 export interface StyleDefinition {
   id: string;
   name: string;
   description: string;
-  /** Gel scrollbars replace the system overlay scrollbars. */
-  scrollbars: "system" | "gel";
 }
 
 export const styles = [
   {
     id: "macos",
     name: "macOS",
-    description: "Today's macOS controls: capsule buttons, glass menus, light grouped panels",
-    scrollbars: "system",
-  },
-  {
-    id: "aqua",
-    name: "Aqua",
-    description: "Gel buttons, pinstripes and Lucida Grande, with a graphite dark mode",
-    scrollbars: "gel",
-  },
-  {
-    id: "flat",
-    name: "Flat",
-    description: "Modern macOS: soft fills, spacing and a translucent sidebar",
-    scrollbars: "system",
+    description: "Today's macOS controls, light and without shadows",
   },
 ] as const satisfies StyleDefinition[];
 

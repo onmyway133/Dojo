@@ -17,7 +17,7 @@ export function ToolCard({ tool }: { tool: ToolMeta }) {
         className="ds-card flex h-full flex-col gap-3 p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         <div className="ds-icon-tile flex size-9 items-center justify-center rounded-[9px]">
-          <Icon className="relative size-[18px]" strokeWidth={1.9} />
+          <Icon className="relative size-[18px]" strokeWidth={1.6} />
         </div>
         <div className="min-w-0">
           <h3 className="ds-title truncate pr-6 text-[13px] font-semibold">{tool.name}</h3>

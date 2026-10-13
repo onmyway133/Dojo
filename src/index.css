@@ -2,8 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "./styles/accents.css";
-@import "./styles/themes/flat.css";
-@import "./styles/themes/aqua.css";
 @import "./styles/themes/macos.css";
 @import "./styles/skins.css";
 @import "./styles/prose.css";
@@ -64,7 +62,7 @@
 :root {
   --radius: 0.5rem;
   /* Height of the title bar strip; the traffic lights are centred in it. */
-  --toolbar-height: 56px;
+  --toolbar-height: 64px;
   --code-keyword: #ad3da4;
   --code-string: #c41a16;
   --code-number: #1c00cf;

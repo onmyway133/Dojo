@@ -73,46 +73,6 @@
     background: var(--ds-table-stripe);
   }
 
-  /* ---------- Shine: the glossy top highlight of gel controls (none in flat themes) ---------- */
-
-  /* Hosts form a stacking context so the shine (z-index -1) sits above their
-     background but below their text and icons. */
-  .ds-button,
-  .ds-chip,
-  .ds-icon-tile,
-  .ds-segment,
-  .ds-sidebar-item,
-  .ds-select-arrow {
-    position: relative;
-    z-index: 0;
-  }
-
-  .ds-button::before,
-  .ds-chip::before,
-  .ds-icon-tile::before,
-  .ds-segment[data-state="on"]::before,
-  .ds-sidebar-item[aria-current="page"]::before,
-  .ds-select-arrow::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    left: 7%;
-    right: 7%;
-    top: 1px;
-    height: 48%;
-    border-radius: 999px;
-    background: var(--ds-shine);
-    pointer-events: none;
-  }
-  /* Selected states carry white labels, so they get a softer shine to keep contrast. */
-  .ds-chip[data-selected="true"]::before,
-  .ds-icon-tile::before,
-  .ds-segment[data-state="on"]::before,
-  .ds-sidebar-item[aria-current="page"]::before,
-  .ds-select-arrow::before {
-    background: var(--ds-shine-soft);
-  }
-
   /* ---------- Controls ---------- */
 
   .ds-button {
@@ -134,18 +94,18 @@
     filter: var(--ds-active-filter);
   }
   .ds-button[data-variant="default"] {
-    background: var(--ds-gel-bg);
-    color: var(--ds-gel-fg);
-    border-color: var(--ds-gel-border);
-    box-shadow: var(--ds-gel-shadow);
-    text-shadow: var(--ds-gel-text-shadow);
+    background: var(--ds-prominent-bg);
+    color: var(--ds-prominent-fg);
+    border-color: var(--ds-prominent-border);
+    box-shadow: var(--ds-prominent-shadow);
+    text-shadow: var(--ds-prominent-text-shadow);
   }
   .ds-button[data-variant="destructive"] {
     background: var(--ds-danger-bg);
     color: var(--ds-danger-fg);
     border-color: var(--ds-danger-border);
-    box-shadow: var(--ds-gel-shadow);
-    text-shadow: var(--ds-gel-text-shadow);
+    box-shadow: var(--ds-prominent-shadow);
+    text-shadow: var(--ds-prominent-text-shadow);
   }
   /* Toolbar and section icon buttons. */
   .ds-button[data-variant="ghost"] {
@@ -155,9 +115,6 @@
     box-shadow: var(--ds-tool-shadow);
     text-shadow: none;
     border-radius: var(--ds-tool-radius);
-  }
-  .ds-button[data-variant="ghost"]::before {
-    opacity: var(--ds-tool-shine-opacity);
   }
   .ds-button[data-variant="ghost"]:hover {
     background: var(--ds-tool-hover-bg);
@@ -180,9 +137,6 @@
     backdrop-filter: var(--ds-glass-blur);
     -webkit-backdrop-filter: var(--ds-glass-blur);
   }
-  .ds-button[data-variant="toolbar"]::before {
-    opacity: var(--ds-tool-shine-opacity);
-  }
   .ds-button[data-variant="toolbar"]:hover {
     background: var(--ds-toolbar-button-hover-bg);
   }
@@ -192,9 +146,6 @@
     border-color: transparent;
     box-shadow: none;
     color: var(--ds-accent);
-  }
-  .ds-button[data-variant="link"]::before {
-    display: none;
   }
   .ds-button:disabled {
     filter: none;
@@ -304,9 +255,6 @@
     box-shadow: var(--ds-chip-on-shadow);
     text-shadow: var(--ds-segment-on-text-shadow);
   }
-  .ds-chip:not([data-selected="true"])::before {
-    opacity: var(--ds-tool-shine-opacity);
-  }
 
   .ds-switch {
     --w: var(--ds-switch-w);
@@ -364,10 +312,10 @@
     box-shadow: var(--ds-checkbox-shadow);
   }
   .ds-checkbox[data-state="checked"] {
-    background: var(--ds-gel-bg);
-    border-color: var(--ds-gel-border);
-    box-shadow: var(--ds-gel-shadow);
-    color: var(--ds-gel-fg);
+    background: var(--ds-prominent-bg);
+    border-color: var(--ds-prominent-border);
+    box-shadow: var(--ds-prominent-shadow);
+    color: var(--ds-prominent-fg);
   }
 
   .ds-badge {
@@ -473,7 +421,7 @@
   .ds-menu-item[data-selected="true"] {
     background: var(--ds-menu-item-on-bg);
     color: var(--ds-menu-item-on-fg);
-    text-shadow: var(--ds-gel-text-shadow);
+    text-shadow: var(--ds-prominent-text-shadow);
   }
   .ds-menu-item[data-highlighted] svg,
   .ds-menu-item[data-selected="true"] svg {
@@ -489,24 +437,4 @@
     box-shadow: var(--ds-tooltip-shadow);
     border-radius: var(--ds-tooltip-radius);
   }
-}
-
-/* Gel scrollbars for themes that opt in. */
-html[data-scrollbars="gel"] ::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
-}
-html[data-scrollbars="gel"] ::-webkit-scrollbar-track {
-  background: var(--ds-scroll-track);
-  box-shadow: inset 1px 0 2px rgb(0 0 0 / 0.18);
-  border-radius: 7px;
-}
-html[data-scrollbars="gel"] ::-webkit-scrollbar-thumb {
-  background: var(--ds-scroll-thumb);
-  border: 1px solid var(--ds-gel-border);
-  border-radius: 7px;
-  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.6);
-}
-html[data-scrollbars="gel"] ::-webkit-scrollbar-corner {
-  background: transparent;
 }

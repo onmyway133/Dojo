@@ -37,11 +37,11 @@ export const useSettings = create<SettingsState>()(
     }),
     {
       name: "settings",
-      version: 1,
-      // v1 made the macOS style the default; move earlier installs onto it once.
+      version: 2,
+      // v1 made macOS the default style, v2 removed the others; move earlier installs onto it.
       migrate: (persisted, version) => {
         const state = persisted as SettingsState;
-        return version < 1 ? { ...state, style: defaultStyle } : state;
+        return version < 2 ? { ...state, style: defaultStyle } : state;
       },
     },
   ),

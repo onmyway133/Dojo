@@ -21,7 +21,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
   );
 }
 
-/** Style, light/dark and accent, from the sidebar footer. */
+/** Light/dark, accent and (when several exist) style, from the sidebar footer. */
 export function AppearanceMenu() {
   const { style, theme, accent, setStyle, setTheme, setAccent } = useSettings();
   const current = styles.find((s) => s.id === style);
@@ -40,10 +40,12 @@ export function AppearanceMenu() {
           sideOffset={6}
           className="ds-menu z-50 flex w-72 flex-col gap-3.5 rounded-xl p-3.5 text-[13px] outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0"
         >
-          <Row label="Style">
-            <Segmented value={style} onChange={setStyle} choices={styleChoices} />
-            {current && <p className="text-xs text-muted-foreground">{current.description}</p>}
-          </Row>
+          {styles.length > 1 && (
+            <Row label="Style">
+              <Segmented value={style} onChange={setStyle} choices={styleChoices} />
+              {current && <p className="text-xs text-muted-foreground">{current.description}</p>}
+            </Row>
+          )}
           <Row label="Appearance">
             <Segmented value={theme} onChange={setTheme} choices={appearanceChoices} />
           </Row>

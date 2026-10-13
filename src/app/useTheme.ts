@@ -51,5 +51,4 @@ export function applyStyle(style: string, accent: string) {
   const root = document.documentElement;
   root.dataset.style = styleById(style).id;
   root.dataset.accent = accent;
-  root.dataset.scrollbars = styleById(style).scrollbars;
 }

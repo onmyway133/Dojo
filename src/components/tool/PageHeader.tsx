@@ -14,7 +14,7 @@ export function PageHeader({ icon: Icon, title, description, actions }: PageHead
   return (
     <DragRegion className="ds-toolbar flex h-(--toolbar-height) shrink-0 items-center gap-3 px-5">
       <div className="ds-icon-tile flex size-8 shrink-0 items-center justify-center rounded-[8px]">
-        <Icon className="relative size-[18px]" strokeWidth={1.9} />
+        <Icon className="relative size-[18px]" strokeWidth={1.6} />
       </div>
       <div className="min-w-0">
         <h1 className="ds-title truncate text-[16px] leading-tight font-semibold">{title}</h1>

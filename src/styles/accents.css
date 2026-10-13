@@ -1,6 +1,6 @@
 /*
  * Accent colors, independent of the theme. `data-accent` on <html> picks one; themes
- * derive their gel shades and tints from `--ds-accent` with color-mix.
+ * derive their shades and tints from `--ds-accent` with color-mix.
  */
 :root,
 :root[data-accent="blue"] {
