@@ -12,6 +12,8 @@ pub fn run() {
             commands::hash::hash_text,
             commands::hash::hash_file,
             commands::hash::hmac,
+            commands::convert::json_to_toml,
+            commands::convert::toml_to_json,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
