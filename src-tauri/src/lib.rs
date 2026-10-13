@@ -1,6 +1,7 @@
 mod commands;
 mod error;
 mod tools;
+mod window;
 
 #[cfg(debug_assertions)]
 mod dev {
@@ -17,6 +18,8 @@ mod dev {
         });
     }
 }
+
+use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -42,8 +45,16 @@ pub fn run() {
         .setup(|app| {
             #[cfg(debug_assertions)]
             dev::run_dev_script(app);
-            let _ = app;
+            if let Some(main) = app.get_webview_window("main") {
+                window::fit_titlebar_to_traffic_lights(main.ns_window());
+            }
             Ok(())
+        })
+        .on_window_event(|window, event| {
+            // AppKit stretches the title bar container again on every resize.
+            if let tauri::WindowEvent::Resized(_) = event {
+                window::fit_titlebar_to_traffic_lights(window.ns_window());
+            }
         })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
