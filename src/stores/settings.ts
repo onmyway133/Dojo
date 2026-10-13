@@ -35,6 +35,14 @@ export const useSettings = create<SettingsState>()(
       setEditorFontSize: (editorFontSize) => set({ editorFontSize }),
       setEditorWrap: (editorWrap) => set({ editorWrap }),
     }),
-    { name: "settings" },
+    {
+      name: "settings",
+      version: 1,
+      // v1 made the macOS style the default; move earlier installs onto it once.
+      migrate: (persisted, version) => {
+        const state = persisted as SettingsState;
+        return version < 1 ? { ...state, style: defaultStyle } : state;
+      },
+    },
   ),
 );

@@ -4,6 +4,7 @@
 @import "./styles/accents.css";
 @import "./styles/themes/flat.css";
 @import "./styles/themes/aqua.css";
+@import "./styles/themes/macos.css";
 @import "./styles/skins.css";
 
 @custom-variant dark (&:is(.dark *));

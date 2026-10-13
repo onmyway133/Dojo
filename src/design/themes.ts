@@ -13,6 +13,12 @@ export interface StyleDefinition {
 
 export const styles = [
   {
+    id: "macos",
+    name: "macOS",
+    description: "Today's macOS controls: capsule buttons, glass menus, light grouped panels",
+    scrollbars: "system",
+  },
+  {
     id: "aqua",
     name: "Aqua",
     description: "Gel buttons, pinstripes and Lucida Grande, with a graphite dark mode",
@@ -39,7 +45,7 @@ export const accents = [
 
 export type AccentId = (typeof accents)[number]["id"];
 
-export const defaultStyle: StyleId = "aqua";
+export const defaultStyle: StyleId = "macos";
 export const defaultAccent: AccentId = "blue";
 
 export const styleById = (id: string) => styles.find((s) => s.id === id) ?? styles[0];

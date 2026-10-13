@@ -16,14 +16,14 @@ function Switch({
       data-slot="switch"
       data-size={size}
       className={cn(
-        "ds-switch peer group/switch relative inline-flex shrink-0 items-center rounded-full outline-none transition-[background,box-shadow] focus-visible:ring-3 focus-visible:ring-ring/60 disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-[22px] data-[size=default]:w-[40px] data-[size=sm]:h-[18px] data-[size=sm]:w-[32px]",
+        "ds-switch peer relative inline-flex shrink-0 items-center rounded-full outline-none transition-[background,box-shadow] focus-visible:ring-3 focus-visible:ring-ring/60 disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       {...props}
     >
       <SwitchPrimitive.Thumb
         data-slot="switch-thumb"
-        className="ds-switch-thumb pointer-events-none block translate-x-px rounded-full transition-transform group-data-[size=default]/switch:size-[18px] group-data-[size=sm]/switch:size-[14px] group-data-[size=default]/switch:data-[state=checked]:translate-x-[19px] group-data-[size=sm]/switch:data-[state=checked]:translate-x-[15px]"
+        className="ds-switch-thumb pointer-events-none block rounded-full transition-transform"
       />
     </SwitchPrimitive.Root>
   )

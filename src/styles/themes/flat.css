@@ -3,6 +3,19 @@
  * sidebar shows the window's vibrancy material inside the app.
  */
 :root[data-style="flat"] {
+  --ds-glass-blur: none;
+  --ds-sidebar-item-height: 28px;
+  --ds-switch-w: 32px;
+  --ds-switch-h: 18px;
+  --ds-switch-thumb-w: 14px;
+  --ds-switch-thumb-h: 14px;
+  --ds-popup-bg: var(--ds-control-bg);
+  --ds-popup-hover-bg: var(--ds-control-hover-bg);
+  --ds-popup-border: var(--ds-control-border);
+  --ds-popup-shadow: var(--ds-control-shadow);
+  --ds-popup-radius: var(--ds-control-radius);
+  --ds-select-arrow-shadow: none;
+
   --ds-font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
 
   --background: oklch(1 0 0);

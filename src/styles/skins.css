@@ -186,7 +186,21 @@
     background: var(--ds-field-hover-bg);
   }
 
-  /* Pop-up button: the trigger is a neutral control with an arrow box on the right. */
+  /* Pop-up button: a control with an arrow box on the right. */
+  .ds-popup {
+    position: relative;
+    z-index: 0;
+    background: var(--ds-popup-bg);
+    color: var(--ds-control-fg);
+    border: 1px solid var(--ds-popup-border);
+    box-shadow: var(--ds-popup-shadow);
+    text-shadow: var(--ds-control-text-shadow);
+    border-radius: var(--ds-popup-radius);
+  }
+  .ds-popup:hover {
+    background: var(--ds-popup-hover-bg);
+    filter: var(--ds-hover-filter);
+  }
   .ds-select-arrow {
     position: relative;
     overflow: hidden;
@@ -194,6 +208,7 @@
     color: var(--ds-select-arrow-fg);
     border: 1px solid var(--ds-select-arrow-border);
     border-radius: var(--ds-select-arrow-radius);
+    box-shadow: var(--ds-select-arrow-shadow);
   }
 
   .ds-segmented {
@@ -257,6 +272,12 @@
   }
 
   .ds-switch {
+    --w: var(--ds-switch-w);
+    --h: var(--ds-switch-h);
+    --tw: var(--ds-switch-thumb-w);
+    --th: var(--ds-switch-thumb-h);
+    width: var(--w);
+    height: var(--h);
     background: var(--ds-switch-bg);
     border: 1px solid var(--ds-switch-border);
     box-shadow: var(--ds-switch-shadow);
@@ -266,10 +287,24 @@
     border-color: var(--ds-switch-on-border);
     box-shadow: var(--ds-switch-on-shadow);
   }
+  .ds-switch[data-size="sm"] {
+    --w: calc(var(--ds-switch-w) * 0.82);
+    --h: calc(var(--ds-switch-h) * 0.82);
+    --tw: calc(var(--ds-switch-thumb-w) * 0.82);
+    --th: calc(var(--ds-switch-thumb-h) * 0.82);
+  }
   .ds-switch-thumb {
+    width: var(--tw);
+    height: var(--th);
+    transform: translateX(1px);
     background: var(--ds-switch-thumb-bg);
     border: 1px solid var(--ds-switch-thumb-border);
     box-shadow: var(--ds-switch-thumb-shadow);
+  }
+  .ds-switch[data-state="checked"] .ds-switch-thumb {
+    /* Track width minus thumb, the 1px inset on each side and the 1px borders. */
+    transform: translateX(calc(var(--w) - var(--tw) - 3px));
+    background: var(--ds-switch-thumb-on-bg, var(--ds-switch-thumb-bg));
   }
 
   .ds-checkbox {
@@ -353,6 +388,7 @@
   .ds-sidebar-item {
     position: relative;
     overflow: hidden;
+    height: var(--ds-sidebar-item-height);
     border-radius: var(--ds-sidebar-item-radius);
   }
   .ds-sidebar-item:hover {
@@ -375,6 +411,8 @@
   /* ---------- Overlays ---------- */
 
   .ds-menu {
+    backdrop-filter: var(--ds-glass-blur);
+    -webkit-backdrop-filter: var(--ds-glass-blur);
     background: var(--ds-menu-bg);
     color: var(--popover-foreground);
     border: 1px solid var(--ds-menu-border);
@@ -392,6 +430,8 @@
   }
 
   .ds-tooltip {
+    backdrop-filter: var(--ds-glass-blur);
+    -webkit-backdrop-filter: var(--ds-glass-blur);
     background: var(--ds-tooltip-bg);
     color: var(--ds-tooltip-fg);
     border: 1px solid var(--ds-tooltip-border);
