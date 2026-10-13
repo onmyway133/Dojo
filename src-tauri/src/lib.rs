@@ -17,6 +17,9 @@ pub fn run() {
             commands::files::read_file,
             commands::files::write_file,
             commands::files::file_info,
+            commands::encode::gzip_compress,
+            commands::encode::gzip_decompress,
+            commands::encode::parse_certificates,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

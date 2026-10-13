@@ -3,3 +3,4 @@
 pub mod hash;
 pub mod convert;
 pub mod files;
+pub mod encode;

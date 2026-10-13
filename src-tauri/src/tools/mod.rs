@@ -2,3 +2,5 @@
 
 pub mod hash;
 pub mod convert;
+pub mod certificate;
+pub mod gzip;
