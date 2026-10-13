@@ -54,6 +54,15 @@
     ],
     "macOS": {
       "minimumSystemVersion": "13.0"
+    },
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENEMzdDNzEyRUE1M0I1MzQKUldRMHRWUHFFc2MzemE4SGZaNzAyM2FCUWFNVnJIUGZQUnN6bHR3S1ZPRDhTSXlseDRWV0R0QjEK",
+      "endpoints": [
+        "https://github.com/onmyway133/DevTools/releases/latest/download/latest.json"
+      ]
     }
   }
 }

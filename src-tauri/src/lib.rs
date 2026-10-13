@@ -10,8 +10,12 @@ mod dev {
     /// Debug builds only: evaluates `DEVTOOLS_DEV_SCRIPT` in the main window shortly after
     /// launch, so UI checks can seed state and navigate without synthetic key events.
     pub fn run_dev_script(app: &tauri::App) {
-        let Ok(script) = std::env::var("DEVTOOLS_DEV_SCRIPT") else { return };
-        let Some(window) = app.get_webview_window("main") else { return };
+        let Ok(script) = std::env::var("DEVTOOLS_DEV_SCRIPT") else {
+            return;
+        };
+        let Some(window) = app.get_webview_window("main") else {
+            return;
+        };
         std::thread::spawn(move || {
             std::thread::sleep(std::time::Duration::from_secs(3));
             let _ = window.eval(&script);
@@ -24,6 +28,9 @@ use tauri::Manager;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_autostart::Builder::new().build())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_opener::init())
