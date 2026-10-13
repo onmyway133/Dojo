@@ -8,3 +8,4 @@ pub mod hash;
 pub mod images;
 pub mod network;
 pub mod rsa_keys;
+pub mod password_hash;

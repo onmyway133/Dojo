@@ -28,3 +28,17 @@ pub async fn generate_app_icon(
     .await
     .map_err(|e| AppError::invalid(e.to_string()))?
 }
+
+#[tauri::command]
+pub async fn bcrypt_hash(password: String, cost: u32) -> AppResult<String> {
+    tauri::async_runtime::spawn_blocking(move || crate::tools::password_hash::bcrypt_hash(&password, cost))
+        .await
+        .map_err(|e| AppError::invalid(e.to_string()))?
+}
+
+#[tauri::command]
+pub async fn bcrypt_verify(password: String, hash: String) -> AppResult<bool> {
+    tauri::async_runtime::spawn_blocking(move || crate::tools::password_hash::bcrypt_verify(&password, &hash))
+        .await
+        .map_err(|e| AppError::invalid(e.to_string()))?
+}

@@ -49,6 +49,8 @@ pub fn run() {
             commands::encode::parse_certificates,
             commands::generate::generate_rsa_keys,
             commands::generate::generate_app_icon,
+            commands::generate::bcrypt_hash,
+            commands::generate::bcrypt_verify,
             commands::images::image_info,
             commands::images::convert_image,
             commands::images::compress_image,
