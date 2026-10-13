@@ -67,7 +67,7 @@ export function CodeEditor({
         searchKeymap: true,
         tabSize: 2,
       }}
-      className={cn("min-h-0 flex-1 overflow-hidden rounded-b-xl text-left", className)}
+      className={cn("ds-well min-h-0 flex-1 overflow-hidden text-left", className)}
     />
   );
 }

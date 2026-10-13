@@ -34,7 +34,7 @@ function CookieRow({ cookie, decode }: { cookie: ParsedCookie; decode: boolean }
   const scope = [cookie.domain && `Domain ${cookie.domain}`, cookie.path && `Path ${cookie.path}`].filter(Boolean).join(" · ");
 
   return (
-    <div className="group rounded-lg px-2 py-2 hover:bg-field">
+    <div className="ds-row group rounded-lg px-2 py-2">
       <div className="flex items-start gap-3">
         <div className="w-40 shrink-0 truncate pt-0.5 font-mono text-[13px] font-semibold">{cookie.name}</div>
         <div className="min-w-0 flex-1 pt-0.5 font-mono text-[12.5px] select-text [overflow-wrap:anywhere]">

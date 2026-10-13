@@ -17,7 +17,7 @@ export function ResultRow({ label, value, mono, display, className }: ResultRowP
   return (
     <div
       className={cn(
-        "group flex min-h-9 items-center gap-3 rounded-lg px-2 py-1 hover:bg-field",
+        "ds-row group flex min-h-9 items-center gap-3 rounded-lg px-2 py-1",
         className,
       )}
     >

@@ -16,10 +16,10 @@ export function HomePage() {
         title="All Tools"
         description={`${tools.length} tools for everyday development`}
       />
-      <div className="min-h-0 flex-1 overflow-y-auto px-6 pb-8">
+      <div className="min-h-0 flex-1 overflow-y-auto px-5 pt-4 pb-8">
         {groups.map(({ category, tools: groupTools }) => (
           <section key={category.id} className="pt-5 first:pt-1">
-            <h2 className="mb-2.5 flex items-baseline gap-2 text-[15px] font-semibold">
+            <h2 className="ds-title mb-2.5 flex items-baseline gap-2 text-[15px] font-semibold">
               {category.name}
               <span className="text-xs font-normal text-muted-foreground">{groupTools.length}</span>
             </h2>

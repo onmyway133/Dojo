@@ -49,7 +49,7 @@ export default function CronParserTool() {
             <p className="text-[17px] font-semibold">{result.info.description}</p>
             <div className="mt-3 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-2">
               {result.info.fields.map((field) => (
-                <div key={field.name} className="rounded-lg bg-field px-3 py-2">
+                <div key={field.name} className="ds-well m-0 px-3 py-2">
                   <div className="font-mono text-[15px]">{field.value}</div>
                   <div className="text-xs text-muted-foreground">{field.name}</div>
                 </div>
@@ -59,7 +59,7 @@ export default function CronParserTool() {
           <ToolSection title="Next Runs" meta="Local time">
             <ol className="-mx-2 flex flex-col gap-0.5">
               {result.info.next.map((date, index) => (
-                <li key={date.getTime()} className="flex items-center gap-3 rounded-lg px-2 py-1.5 text-[13px] hover:bg-field">
+                <li key={date.getTime()} className="ds-row flex items-center gap-3 rounded-lg px-2 py-1.5 text-[13px]">
                   <span className="w-5 text-right text-muted-foreground tabular-nums">{index + 1}</span>
                   <span className="flex-1">{dateFormat.format(date)}</span>
                   <span className="text-xs text-muted-foreground">

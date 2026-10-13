@@ -67,7 +67,7 @@ export default function JsonViewerTool() {
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
                   placeholder="Filter keys and values"
-                  className="h-7 w-48 rounded-md bg-field pr-2 pl-7 text-[12px] outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+                  className="ds-field h-6 w-48 rounded-full! pr-2 pl-7 text-[12px] outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
                 />
               </div>
               <IconAction label="Expand All" onClick={() => setExpanded(containerPaths(root))} disabled={root === undefined}>
@@ -79,7 +79,7 @@ export default function JsonViewerTool() {
             </>
           }
         >
-          <div className="min-h-0 flex-1 overflow-auto px-2 pb-3">
+          <div className="ds-well min-h-0 flex-1 overflow-auto p-2">
             {parsed && !parsed.ok && (
               <StatusMessage tone="error" className="mx-2">
                 {parsed.error}

@@ -14,13 +14,13 @@ export function ToolCard({ tool }: { tool: ToolMeta }) {
       <Link
         to={`/tools/${tool.id}`}
         draggable={false}
-        className="flex h-full flex-col gap-3 rounded-xl bg-section p-4 outline-none transition-colors hover:bg-section-hover focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="ds-card flex h-full flex-col gap-3 p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
-        <div className="flex size-9 items-center justify-center rounded-[9px] bg-primary/12 text-primary">
-          <Icon className="size-[18px]" strokeWidth={1.75} />
+        <div className="ds-icon-tile flex size-9 items-center justify-center rounded-[9px]">
+          <Icon className="relative size-[18px]" strokeWidth={1.9} />
         </div>
         <div className="min-w-0">
-          <h3 className="truncate pr-6 text-[13px] font-semibold">{tool.name}</h3>
+          <h3 className="ds-title truncate pr-6 text-[13px] font-semibold">{tool.name}</h3>
           <p className="mt-0.5 line-clamp-2 text-xs leading-snug text-muted-foreground">{tool.description}</p>
         </div>
       </Link>

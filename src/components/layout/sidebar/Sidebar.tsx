@@ -28,10 +28,10 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="chrome flex w-60 shrink-0 flex-col bg-sidebar text-sidebar-foreground">
+    <aside className="ds-sidebar chrome flex w-60 shrink-0 flex-col">
       {/* Room for the traffic lights, and a handle to move the window. */}
-      <DragRegion className="h-13 shrink-0" />
-      <div className="px-3 pb-1">
+      <DragRegion className="ds-toolbar h-(--toolbar-height) shrink-0" />
+      <div className="px-3 pt-3 pb-1">
         <SidebarSearch onSubmit={openFirstMatch} />
       </div>
       <nav className="min-h-0 flex-1 overflow-y-auto px-3 pb-4">

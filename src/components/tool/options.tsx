@@ -15,12 +15,12 @@ export interface Choice<T extends string> {
   label: ReactNode;
 }
 
-/** A row of options above the editors. Same fill as a section, no title. */
+/** A row of options above the editors, drawn as a panel without a title. */
 export function ToolOptions({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
       className={cn(
-        "flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2.5 rounded-xl bg-section px-4 py-2.5",
+        "ds-panel flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2.5 px-4 py-2.5",
         className,
       )}
     >
@@ -33,13 +33,13 @@ export function ToolOptions({ children, className }: { children: ReactNode; clas
 export function Option({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex items-center gap-2.5">
-      <span className="text-[13px] text-muted-foreground">{label}</span>
+      <span className="ds-panel-title text-[13px] text-muted-foreground">{label}</span>
       {children}
     </div>
   );
 }
 
-/** macOS style segmented control. The selected segment is a raised fill, not a ring. */
+/** Segmented control. The theme draws the track and the selected segment (`ds-segmented`). */
 export function Segmented<T extends string>({
   value,
   onChange,
@@ -56,18 +56,13 @@ export function Segmented<T extends string>({
       type="single"
       value={value}
       onValueChange={(next) => next && onChange(next as T)}
-      className={cn("inline-flex rounded-[7px] bg-field p-0.5", className)}
+      className={cn("ds-segmented inline-flex", className)}
     >
       {choices.map((choice) => (
         <ToggleGroup.Item
           key={choice.value}
           value={choice.value}
-          className={cn(
-            "h-6 rounded-[5px] px-2.5 text-[12px] font-medium whitespace-nowrap text-muted-foreground outline-none",
-            "hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60",
-            "data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-[0_1px_2px_rgb(0_0_0/0.12)]",
-            "dark:data-[state=on]:bg-white/16",
-          )}
+          className="ds-segment h-[22px] px-2.5 text-[12px] font-medium whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
         >
           {choice.label}
         </ToggleGroup.Item>

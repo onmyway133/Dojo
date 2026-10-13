@@ -44,7 +44,7 @@ export function ToolPage({ children, actions, layout = "fill", className }: Tool
       />
       <div
         className={cn(
-          "@container flex min-h-0 flex-1 flex-col gap-4 px-6 pb-6",
+          "@container flex min-h-0 flex-1 flex-col gap-4 px-5 pt-4 pb-5",
           layout === "scroll" && "overflow-y-auto",
           className,
         )}

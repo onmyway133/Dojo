@@ -21,7 +21,7 @@ const checkerboard =
 function ContrastCard({ label, ratio, background, foreground }: { label: string; ratio: number; background: string; foreground: string }) {
   const level = contrastLevel(ratio);
   return (
-    <div className="flex items-center gap-3 rounded-lg bg-field p-3">
+    <div className="ds-well m-0 flex items-center gap-3 p-3">
       <div
         className="flex size-12 shrink-0 items-center justify-center rounded-lg text-[17px] font-semibold"
         style={{ background, color: foreground }}

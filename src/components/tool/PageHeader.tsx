@@ -12,14 +12,14 @@ interface PageHeaderProps {
 /** Top of every page. Doubles as the window's title bar, so it is a drag region. */
 export function PageHeader({ icon: Icon, title, description, actions }: PageHeaderProps) {
   return (
-    <DragRegion className="flex shrink-0 items-center gap-3.5 px-6 pt-5 pb-4">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-[10px] bg-primary/12 text-primary">
-        <Icon className="size-5" strokeWidth={1.75} />
+    <DragRegion className="ds-toolbar flex h-(--toolbar-height) shrink-0 items-center gap-3 px-5">
+      <div className="ds-icon-tile flex size-8 shrink-0 items-center justify-center rounded-[8px]">
+        <Icon className="relative size-[18px]" strokeWidth={1.9} />
       </div>
       <div className="min-w-0">
-        <h1 className="truncate text-[19px] leading-tight font-semibold tracking-tight">{title}</h1>
+        <h1 className="ds-title truncate text-[16px] leading-tight font-semibold">{title}</h1>
         {description && (
-          <p className="mt-0.5 truncate text-[13px] text-muted-foreground">{description}</p>
+          <p className="ds-title mt-px truncate text-[12px] text-muted-foreground">{description}</p>
         )}
       </div>
       {actions && <div className="ml-auto flex shrink-0 items-center gap-1">{actions}</div>}

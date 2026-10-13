@@ -28,7 +28,7 @@ export function SidebarSearch({ onSubmit }: SidebarSearchProps) {
         }}
         placeholder="Search"
         spellCheck={false}
-        className="h-7 w-full rounded-md bg-field pr-7 pl-7 text-[13px] outline-none placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="ds-field h-7 w-full rounded-full! pr-7 pl-7 text-[13px] outline-none placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
       />
       {query && (
         <button

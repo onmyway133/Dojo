@@ -42,7 +42,7 @@ const JsonNode = memo(function JsonNode({ name, value, path, depth, expanded, on
   return (
     <div>
       <div
-        className="group flex min-h-6 items-start gap-1 rounded-md pr-1 hover:bg-field"
+        className="ds-row group flex min-h-6 items-start gap-1 rounded-md pr-1"
         style={{ paddingLeft: depth * 16 }}
       >
         <button

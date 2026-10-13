@@ -111,7 +111,7 @@ export default function DateTimeTool() {
               ))}
             </div>
             <FieldRow label="Result" hint={customError} error={Boolean(customError)}>
-              <div className="flex h-8 min-w-0 flex-1 items-center rounded-lg bg-field px-2.5 font-mono text-[13px] select-text">
+              <div className="flex h-8 min-w-0 flex-1 items-center ds-field px-2.5 font-mono text-[13px] select-text">
                 <span className="truncate">{custom}</span>
               </div>
               <CopyButton value={custom} />

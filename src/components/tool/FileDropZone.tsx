@@ -13,7 +13,7 @@ interface FileDropZoneProps {
   className?: string;
 }
 
-/** Click to choose or drop a file anywhere on the window. A filled well, no dashed border. */
+/** Click to choose or drop a file anywhere on the window. Drawn as a well (`ds-dropzone`). */
 export function FileDropZone({
   onFile,
   filters,
@@ -37,10 +37,10 @@ export function FileDropZone({
     <button
       type="button"
       onClick={choose}
+      data-dragging={dragging}
       className={cn(
-        "flex w-full flex-col items-center justify-center gap-2 rounded-xl px-6 py-8 text-center outline-none transition-colors",
+        "ds-dropzone flex w-full flex-col items-center justify-center gap-2 rounded-xl px-6 py-8 text-center outline-none",
         "focus-visible:ring-3 focus-visible:ring-ring/50",
-        dragging ? "bg-selected text-primary" : "bg-field hover:bg-field-hover",
         className,
       )}
     >

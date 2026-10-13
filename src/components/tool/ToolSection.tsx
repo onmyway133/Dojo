@@ -15,7 +15,7 @@ interface ToolSectionProps {
   className?: string;
 }
 
-/** A filled, rounded block. Sections are separated by spacing, never borders. */
+/** A panel with a title row. Its look comes from the theme (`ds-panel`). */
 export function ToolSection({
   title,
   meta,
@@ -29,7 +29,7 @@ export function ToolSection({
   return (
     <section
       className={cn(
-        "flex min-h-0 min-w-0 flex-col rounded-xl bg-section",
+        "ds-panel flex min-h-0 min-w-0 flex-col",
         fill && "flex-1",
         !hasHeader && padded && "pt-3",
         className,
@@ -37,7 +37,7 @@ export function ToolSection({
     >
       {hasHeader && (
         <header className="flex h-10 shrink-0 items-center gap-2 pr-2 pl-4">
-          {title && <h2 className="text-[13px] font-semibold">{title}</h2>}
+          {title && <h2 className="ds-panel-title text-[13px] font-semibold">{title}</h2>}
           {meta && <span className="truncate text-xs text-muted-foreground">{meta}</span>}
           {actions && <div className="ml-auto flex items-center gap-0.5">{actions}</div>}
         </header>

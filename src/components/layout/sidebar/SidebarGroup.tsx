@@ -21,7 +21,7 @@ export function SidebarGroup({ id, title, children, forceOpen }: SidebarGroupPro
       <button
         type="button"
         onClick={() => toggle(id)}
-        className="group flex h-6 w-full items-center justify-between rounded-md px-2 text-[11px] font-semibold text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+        className="ds-sidebar-heading group flex h-6 w-full items-center justify-between rounded-md px-2 text-[11px] font-semibold outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
       >
         {title}
         <ChevronRight
