@@ -24,7 +24,7 @@ export function ResultRow({ label, value, mono, display, className }: ResultRowP
       <div className="w-32 shrink-0 text-[13px] text-muted-foreground">{label}</div>
       <div
         className={cn(
-          "min-w-0 flex-1 text-[13px] break-all select-text",
+          "min-w-0 flex-1 text-[13px] break-all whitespace-pre-wrap select-text",
           mono && "font-mono text-[12.5px]",
           !value && "text-muted-foreground",
         )}
