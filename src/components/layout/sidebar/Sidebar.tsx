@@ -5,6 +5,7 @@ import { getTool, groupByCategory, searchTools, tools } from "@/tools/registry";
 import type { ToolMeta } from "@/tools/types";
 import { useLibrary } from "@/stores/library";
 import { useSearch } from "@/stores/search";
+import { AppearanceMenu } from "../AppearanceMenu";
 import { DragRegion } from "../DragRegion";
 import { SidebarGroup } from "./SidebarGroup";
 import { SidebarItem } from "./SidebarItem";
@@ -58,6 +59,9 @@ export function Sidebar() {
           <p className="px-2 pt-6 text-center text-[13px] text-muted-foreground">No tools match “{query.trim()}”</p>
         )}
       </nav>
+      <div className="shrink-0 px-3 pt-1 pb-3">
+        <AppearanceMenu />
+      </div>
     </aside>
   );
 }
