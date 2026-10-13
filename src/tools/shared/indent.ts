@@ -9,3 +9,7 @@ export const indentChoices: Choice<Indent>[] = [
 ];
 
 export const indentString = (indent: Indent) => (indent === "tab" ? "\t" : " ".repeat(Number(indent)));
+
+/** Prettier's indent options for an Indent choice. */
+export const prettierIndent = (indent: Indent) =>
+  indent === "tab" ? { useTabs: true, tabWidth: 4 } : { useTabs: false, tabWidth: Number(indent) };

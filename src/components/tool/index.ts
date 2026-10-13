@@ -9,3 +9,4 @@ export { StatusMessage } from "./StatusMessage";
 export { usePersistentState, useToolMeta } from "./ToolContext";
 export { ToolPage } from "./ToolPage";
 export { ToolSection } from "./ToolSection";
+export { TransformTool, type TransformToolProps } from "./TransformTool";
