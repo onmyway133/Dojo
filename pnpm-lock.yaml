@@ -140,6 +140,12 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      ulid:
+        specifier: ^3.0.2
+        version: 3.0.2
+      uuid:
+        specifier: ^14.0.3
+        version: 14.0.3
       xml-formatter:
         specifier: ^3.7.0
         version: 3.7.0
@@ -3048,6 +3054,10 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  ulid@3.0.2:
+    resolution: {integrity: sha512-yu26mwteFYzBAot7KVMqFGCVpsF6g8wXfJzQUHvu1no3+rRRSFcSV2nKeYvNPLD2J4b08jYBDhHUjeH0ygIl9w==}
+    hasBin: true
+
   undici-types@8.9.0:
     resolution: {integrity: sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg==}
 
@@ -3104,6 +3114,10 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  uuid@14.0.3:
+    resolution: {integrity: sha512-Sc5u1VVln93y1Xnz4R+CunOZc7R9LUcTmhj7Rc7Eg3HVcf7rVn2FOoa812fe0W8p3jD7xeoGSYbfqCGGH2B6xw==}
+    hasBin: true
 
   validate-npm-package-name@7.0.2:
     resolution: {integrity: sha512-hVDIBwsRruT73PbK7uP5ebUt+ezEtCmzZz3F59BSr2F6OVFnJ/6h8liuvdLrQ88Xmnk6/+xGGuq+pG9WwTuy3A==}
@@ -6233,6 +6247,8 @@ snapshots:
 
   typescript@6.0.3: {}
 
+  ulid@3.0.2: {}
+
   undici-types@8.9.0: {}
 
   undici@7.30.0: {}
@@ -6277,6 +6293,8 @@ snapshots:
       '@types/react': 19.3.0
 
   util-deprecate@1.0.2: {}
+
+  uuid@14.0.3: {}
 
   validate-npm-package-name@7.0.2: {}
 
