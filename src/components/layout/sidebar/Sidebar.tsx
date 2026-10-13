@@ -1,11 +1,10 @@
-import { LayoutGrid } from "lucide-react";
+import { LayoutGrid, Settings } from "lucide-react";
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
 import { getTool, groupByCategory, searchTools, tools } from "@/tools/registry";
 import type { ToolMeta } from "@/tools/types";
 import { useLibrary } from "@/stores/library";
 import { useSearch } from "@/stores/search";
-import { AppearanceMenu } from "../AppearanceMenu";
 import { DragRegion } from "../DragRegion";
 import { SidebarGroup } from "./SidebarGroup";
 import { SidebarItem } from "./SidebarItem";
@@ -60,7 +59,7 @@ export function Sidebar() {
         )}
       </nav>
       <div className="shrink-0 px-3 pt-1 pb-3">
-        <AppearanceMenu />
+        <SidebarItem to="/settings" icon={Settings} label="Settings" />
       </div>
     </aside>
   );

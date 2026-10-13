@@ -14,11 +14,14 @@ interface SettingsState {
   editorFontSize: number;
   /** Soft-wrap long lines in code editors. */
   editorWrap: boolean;
+  /** Look for a new release on GitHub shortly after launch. */
+  checkUpdatesAutomatically: boolean;
   setTheme: (theme: ThemePreference) => void;
   setStyle: (style: StyleId) => void;
   setAccent: (accent: AccentId) => void;
   setEditorFontSize: (size: number) => void;
   setEditorWrap: (wrap: boolean) => void;
+  setCheckUpdatesAutomatically: (value: boolean) => void;
 }
 
 export const useSettings = create<SettingsState>()(
@@ -29,11 +32,13 @@ export const useSettings = create<SettingsState>()(
       accent: defaultAccent,
       editorFontSize: 13,
       editorWrap: true,
+      checkUpdatesAutomatically: true,
       setTheme: (theme) => set({ theme }),
       setStyle: (style) => set({ style }),
       setAccent: (accent) => set({ accent }),
       setEditorFontSize: (editorFontSize) => set({ editorFontSize }),
       setEditorWrap: (editorWrap) => set({ editorWrap }),
+      setCheckUpdatesAutomatically: (checkUpdatesAutomatically) => set({ checkUpdatesAutomatically }),
     }),
     {
       name: "settings",
