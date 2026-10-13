@@ -1,8 +1,15 @@
 import { html } from "@codemirror/lang-html";
 import { useCallback } from "react";
-import { Option, Segmented, ToolOptions, TransformTool, usePersistentState } from "@/components/tool";
+import { type Choice, Option, Segmented, ToolOptions, TransformTool, usePersistentState } from "@/components/tool";
 import { indentChoices, prettierIndent, type Indent } from "@/tools/shared/indent";
 import { prettierFormat, type PrintWidth, printWidthChoices } from "@/tools/shared/prettier";
+import { minifyHtml } from "./logic";
+
+type Mode = "beautify" | "minify";
+const modeChoices: Choice<Mode>[] = [
+  { value: "beautify", label: "Beautify" },
+  { value: "minify", label: "Minify" },
+];
 
 const language = html();
 
@@ -11,10 +18,14 @@ const sample = `<!doctype html><html><head><title>DevTools</title><style>body{ma
 export default function HtmlFormatterTool() {
   const [indent, setIndent] = usePersistentState<Indent>("indent", "2");
   const [width, setWidth] = usePersistentState<PrintWidth>("printWidth", "100");
+  const [mode, setMode] = usePersistentState<Mode>("mode", "beautify");
 
   const transform = useCallback(
-    (input: string) => prettierFormat(input, "html", { ...prettierIndent(indent), printWidth: Number(width) }),
-    [indent, width],
+    (input: string) =>
+      mode === "minify"
+        ? minifyHtml(input)
+        : prettierFormat(input, "html", { ...prettierIndent(indent), printWidth: Number(width) }),
+    [mode, indent, width],
   );
 
   return (
@@ -25,12 +36,19 @@ export default function HtmlFormatterTool() {
       placeholder="Paste HTML here"
       options={
         <ToolOptions>
-          <Option label="Indent">
-            <Segmented value={indent} onChange={setIndent} choices={indentChoices} />
+          <Option label="Mode">
+            <Segmented value={mode} onChange={setMode} choices={modeChoices} />
           </Option>
-          <Option label="Line width">
-            <Segmented value={width} onChange={setWidth} choices={printWidthChoices} />
-          </Option>
+          {mode === "beautify" && (
+            <>
+              <Option label="Indent">
+                <Segmented value={indent} onChange={setIndent} choices={indentChoices} />
+              </Option>
+              <Option label="Line width">
+                <Segmented value={width} onChange={setWidth} choices={printWidthChoices} />
+              </Option>
+            </>
+          )}
         </ToolOptions>
       }
     />

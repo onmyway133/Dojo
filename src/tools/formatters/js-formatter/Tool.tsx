@@ -12,6 +12,20 @@ import {
 import { indentChoices, prettierIndent, type Indent } from "@/tools/shared/indent";
 import { prettierFormat, type PrintWidth, printWidthChoices } from "@/tools/shared/prettier";
 
+type Mode = "beautify" | "minify";
+const modeChoices: Choice<Mode>[] = [
+  { value: "beautify", label: "Beautify" },
+  { value: "minify", label: "Minify" },
+];
+
+/** Minifies with terser, which only understands JavaScript. */
+async function minifyJs(code: string, typescript: boolean): Promise<string> {
+  if (typescript) throw new Error("Minify works on JavaScript. Switch Language to JavaScript.");
+  const { minify } = await import("terser");
+  const result = await minify(code, { compress: true, mangle: true, module: true });
+  return result.code ?? "";
+}
+
 type Syntax = "babel" | "typescript";
 
 const syntaxChoices: Choice<Syntax>[] = [
@@ -35,11 +49,14 @@ export default function JsFormatterTool() {
   const [width, setWidth] = usePersistentState<PrintWidth>("printWidth", "100");
   const [semi, setSemi] = usePersistentState("semi", true);
   const [singleQuote, setSingleQuote] = usePersistentState("singleQuote", false);
+  const [mode, setMode] = usePersistentState<Mode>("mode", "beautify");
 
   const transform = useCallback(
     (input: string) =>
-      prettierFormat(input, syntax, { ...prettierIndent(indent), printWidth: Number(width), semi, singleQuote }),
-    [syntax, indent, width, semi, singleQuote],
+      mode === "minify"
+        ? minifyJs(input, syntax === "typescript")
+        : prettierFormat(input, syntax, { ...prettierIndent(indent), printWidth: Number(width), semi, singleQuote }),
+    [mode, syntax, indent, width, semi, singleQuote],
   );
 
   return (
@@ -50,17 +67,24 @@ export default function JsFormatterTool() {
       placeholder="Paste code here"
       options={
         <ToolOptions>
+          <Option label="Mode">
+            <Segmented value={mode} onChange={setMode} choices={modeChoices} />
+          </Option>
           <Option label="Language">
             <Segmented value={syntax} onChange={setSyntax} choices={syntaxChoices} />
           </Option>
-          <Option label="Indent">
-            <Segmented value={indent} onChange={setIndent} choices={indentChoices} />
-          </Option>
-          <Option label="Width">
-            <Segmented value={width} onChange={setWidth} choices={printWidthChoices} />
-          </Option>
-          <OptionSwitch label="Semicolons" checked={semi} onChange={setSemi} />
-          <OptionSwitch label="Single quotes" checked={singleQuote} onChange={setSingleQuote} />
+          {mode === "beautify" && (
+            <>
+              <Option label="Indent">
+                <Segmented value={indent} onChange={setIndent} choices={indentChoices} />
+              </Option>
+              <Option label="Width">
+                <Segmented value={width} onChange={setWidth} choices={printWidthChoices} />
+              </Option>
+              <OptionSwitch label="Semicolons" checked={semi} onChange={setSemi} />
+              <OptionSwitch label="Single quotes" checked={singleQuote} onChange={setSingleQuote} />
+            </>
+          )}
         </ToolOptions>
       }
     />
