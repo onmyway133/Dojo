@@ -1,10 +1,12 @@
 import { type Range, RangeSetBuilder } from "@codemirror/state";
 import { Decoration, EditorView } from "@codemirror/view";
-import { useDeferredValue, useMemo } from "react";
+import { BookOpen } from "lucide-react";
+import { useDeferredValue, useMemo, useRef, useState } from "react";
 import {
   Chip,
   CodeEditor,
   CopyButton,
+  IconAction,
   InputActions,
   SplitView,
   StatusMessage,
@@ -13,6 +15,8 @@ import {
   usePersistentState,
 } from "@/components/tool";
 import { Input } from "@/components/ui/input";
+import { Cheatsheet } from "./Cheatsheet";
+import { type CheatTarget, insertAt } from "./syntax";
 import { captureNames, findMatches, type RegexMatch, replaceAll } from "./logic";
 
 const flagInfo = [
@@ -69,12 +73,38 @@ export default function RegexTesterTool() {
   const toggleFlag = (flag: string) =>
     setFlags((f) => (f.includes(flag) ? f.replace(flag, "") : [...f, flag].sort().join("")));
 
+  const [cheatsheetOpen, setCheatsheetOpen] = useState(false);
+  const patternRef = useRef<HTMLInputElement>(null);
+  const replacementRef = useRef<HTMLInputElement>(null);
+
+  // Inserts at the field's last caret position (inputs keep it while the dialog has focus).
+  const pick = (target: CheatTarget, token: string) => {
+    setCheatsheetOpen(false);
+    if (target === "flags") return toggleFlag(token);
+    const [value, setValue, field] = target === "pattern" ? [pattern, setPattern, patternRef.current] : [replacement, setReplacement, replacementRef.current];
+    const next = insertAt(value, token, field?.selectionStart ?? value.length, field?.selectionEnd ?? value.length);
+    setValue(next.text);
+    requestAnimationFrame(() => {
+      field?.focus();
+      field?.setSelectionRange(next.caret, next.caret);
+    });
+  };
+
   return (
     <ToolPage>
-      <ToolSection title="Pattern" className="shrink-0">
+      <ToolSection
+        title="Pattern"
+        actions={
+          <IconAction label="Regex Cheatsheet" onClick={() => setCheatsheetOpen(true)}>
+            <BookOpen />
+          </IconAction>
+        }
+        className="shrink-0"
+      >
         <div className="flex items-center gap-2">
           <span className="font-mono text-[15px] text-muted-foreground">/</span>
           <Input
+            ref={patternRef}
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
             spellCheck={false}
@@ -131,10 +161,11 @@ export default function RegexTesterTool() {
       </SplitView>
       <ToolSection title="Replace" meta="$1, $<name> and $& work" actions={<CopyButton value={replaced} />} className="h-48 shrink-0" padded={false}>
         <div className="px-4 pb-2">
-          <Input value={replacement} onChange={(e) => setReplacement(e.target.value)} spellCheck={false} className="font-mono text-[13px]" />
+          <Input ref={replacementRef} value={replacement} onChange={(e) => setReplacement(e.target.value)} spellCheck={false} className="font-mono text-[13px]" />
         </div>
         <CodeEditor value={replaced} readOnly lineNumbers={false} />
       </ToolSection>
+      <Cheatsheet open={cheatsheetOpen} onOpenChange={setCheatsheetOpen} onPick={pick} />
     </ToolPage>
   );
 }
