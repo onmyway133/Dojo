@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import {
   type Choice,
   Option,
@@ -26,6 +26,17 @@ const alphabetChoices: Choice<AlphabetChoice>[] = [
 type Count = "1" | "5" | "10" | "50";
 const countChoices: Choice<Count>[] = ["1", "5", "10", "50"].map((v) => ({ value: v as Count, label: v }));
 const compact = new Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 });
+
+/** Compact up to trillions, then scientific notation such as 1.3 × 10¹⁸. */
+function approximate(n: number): ReactNode {
+  if (n < 1e12) return compact.format(n);
+  const [mantissa, exponent] = n.toExponential(1).split("e");
+  return (
+    <>
+      {mantissa} × 10<sup>{Number(exponent)}</sup>
+    </>
+  );
+}
 
 export default function NanoIdTool() {
   const [size, setSize] = usePersistentState("size", 21);
@@ -65,7 +76,7 @@ export default function NanoIdTool() {
       {result.values ? (
         <GeneratedList
           title="IDs"
-          meta={Number.isFinite(safeCount) && safeCount > 1 ? `About ${compact.format(safeCount)} IDs before a 1% chance of a collision` : undefined}
+          meta={Number.isFinite(safeCount) && safeCount > 1 ? <>About {approximate(safeCount)} IDs before a 1% chance of a collision</> : undefined}
           values={result.values}
           onRegenerate={() => setSeed((s) => s + 1)}
         />
