@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   Chip,
   CopyButton,
@@ -13,6 +13,7 @@ import {
   usePersistentState,
 } from "@/components/tool";
 import { Input } from "@/components/ui/input";
+import { useNow } from "@/hooks/useNow";
 import { describeDate, formatInZone, parseDateInput } from "./logic";
 
 const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -22,17 +23,6 @@ const zoneChoices = ["UTC", ...Intl.supportedValuesOf("timeZone").filter((z) => 
 }));
 
 const patternPresets = ["yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy", "MMM d, yyyy h:mm a", "EEEE", "yyyyMMdd'T'HHmmss", "QQQ yyyy"];
-
-/** Ticks once a second while `enabled`, for the live "now" display. */
-function useNow(enabled: boolean): Date {
-  const [now, setNow] = useState(() => new Date());
-  useEffect(() => {
-    if (!enabled) return;
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, [enabled]);
-  return now;
-}
 
 export default function DateTimeTool() {
   const [input, setInput] = usePersistentState("input", "");
