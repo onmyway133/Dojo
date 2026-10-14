@@ -8,7 +8,7 @@ export interface WifiNetwork {
 }
 
 // The WIFI: payload escapes these with a backslash.
-const escape = (value: string) => value.replace(/([\;,:"])/g, "\\$1");
+const escape = (value: string) => value.replace(/([\\;,:"])/g, "\\$1");
 
 /** The `WIFI:` payload phone cameras read to join a network. */
 export function wifiPayload({ ssid, password, security, hidden }: WifiNetwork): string {
