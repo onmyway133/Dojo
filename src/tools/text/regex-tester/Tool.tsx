@@ -50,7 +50,7 @@ function highlight(matches: RegexMatch[]) {
 }
 
 const sample = `Contact: ada@example.com, grace@navy.mil
-Support: help@devtools.app (Mon-Fri)
+Support: help@example.com (Mon-Fri)
 Invalid: not-an-email@, @missing.com`;
 
 export default function RegexTesterTool() {

@@ -13,7 +13,7 @@ import {
 } from "@/components/tool";
 
 const sampleA = `{
-  "name": "devtools",
+  "name": "dojo",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -22,7 +22,7 @@ const sampleA = `{
   }
 }`;
 const sampleB = `{
-  "name": "devtools",
+  "name": "dojo",
   "version": "1.1.0",
   "type": "module",
   "scripts": {

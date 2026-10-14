@@ -16,7 +16,7 @@ const directionChoices: Choice<Direction>[] = [
 ];
 
 const sampleToml = `[package]
-name = "devtools"
+name = "dojo"
 version = "0.1.0"
 edition = "2024"
 

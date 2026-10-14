@@ -22,7 +22,7 @@ export default function Base64TextTool() {
       transform={transform}
       inputTitle={encode ? "Text" : "Base64"}
       outputTitle={encode ? "Base64" : "Text"}
-      sample={encode ? "Hello, DevTools 👋" : "SGVsbG8sIERldlRvb2xzIPCfkYs="}
+      sample={encode ? "Hello, Dojo 👋" : "SGVsbG8sIERvam8g8J+Riw=="}
       options={
         <ToolOptions>
           <Option label="Mode">

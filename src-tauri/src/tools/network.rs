@@ -7,7 +7,7 @@ use crate::error::{AppError, AppResult};
 fn client() -> AppResult<reqwest::Client> {
     reqwest::Client::builder()
         .timeout(Duration::from_secs(10))
-        .user_agent(concat!("DevTools/", env!("CARGO_PKG_VERSION")))
+        .user_agent(concat!("Dojo/", env!("CARGO_PKG_VERSION")))
         .build()
         .map_err(|e| AppError::invalid(e.to_string()))
 }

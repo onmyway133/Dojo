@@ -25,7 +25,7 @@ export function AppLayout() {
       case "find":
         return useCommandMenu.getState().requestSearchFocus();
       case "github":
-        return void openUrl("https://github.com/onmyway133/DevTools");
+        return void openUrl("https://github.com/indiegoodies/Dojo");
     }
   });
   useEffect(() => {

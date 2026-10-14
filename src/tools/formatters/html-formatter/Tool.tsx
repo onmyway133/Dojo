@@ -13,7 +13,7 @@ const modeChoices: Choice<Mode>[] = [
 
 const language = html();
 
-const sample = `<!doctype html><html><head><title>DevTools</title><style>body{margin:0;font-family:system-ui}</style></head><body><nav class="sidebar"><ul><li><a href="#/">All Tools</a></li><li><a href="#/tools/json-formatter">JSON</a></li></ul></nav><main><h1>Hello</h1><p>Formatted with <strong>prettier</strong>.</p></main><script>document.querySelector("h1").addEventListener("click",()=>alert("hi"))</script></body></html>`;
+const sample = `<!doctype html><html><head><title>Dojo</title><style>body{margin:0;font-family:system-ui}</style></head><body><nav class="sidebar"><ul><li><a href="#/">All Tools</a></li><li><a href="#/tools/json-formatter">JSON</a></li></ul></nav><main><h1>Hello</h1><p>Formatted with <strong>prettier</strong>.</p></main><script>document.querySelector("h1").addEventListener("click",()=>alert("hi"))</script></body></html>`;
 
 export default function HtmlFormatterTool() {
   const [indent, setIndent] = usePersistentState<Indent>("indent", "2");

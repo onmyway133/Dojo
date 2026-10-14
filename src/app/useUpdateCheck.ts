@@ -13,7 +13,7 @@ export function useUpdateCheck() {
       try {
         const update = await findUpdate();
         if (!update) return;
-        toast(`DevTools ${update.version} is available`, {
+        toast(`Dojo ${update.version} is available`, {
           description: "Install now and restart?",
           duration: Infinity,
           action: { label: "Install", onClick: () => void installUpdate(update) },

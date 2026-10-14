@@ -17,7 +17,7 @@ const indentChoices: Choice<"2" | "4">[] = [
   { value: "4", label: "4 spaces" },
 ];
 
-const sampleYaml = `name: DevTools
+const sampleYaml = `name: Dojo
 version: 1.2.0
 platforms: [macOS]
 features:

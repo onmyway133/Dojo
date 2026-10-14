@@ -9,4 +9,4 @@ export function formatXmlText(input: string, style: XmlStyle): string {
   return formatXml(input, { ...options, indentation: indentString(style), lineSeparator: "\n" });
 }
 
-export const sampleXml = `<?xml version="1.0" encoding="UTF-8"?><plist version="1.0"><dict><key>CFBundleName</key><string>DevTools</string><key>LSMinimumSystemVersion</key><string>13.0</string><key>Features</key><array><string>Formatters</string><string>Converters</string></array></dict></plist>`;
+export const sampleXml = `<?xml version="1.0" encoding="UTF-8"?><plist version="1.0"><dict><key>CFBundleName</key><string>Dojo</string><key>LSMinimumSystemVersion</key><string>13.0</string><key>Features</key><array><string>Formatters</string><string>Converters</string></array></dict></plist>`;

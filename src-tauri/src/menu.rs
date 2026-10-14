@@ -15,10 +15,10 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
     let home = MenuItemBuilder::with_id(HOME, "All Tools").accelerator("CmdOrCtrl+0").build(app)?;
     let open_tool = MenuItemBuilder::with_id(OPEN_TOOL, "Open Tool…").accelerator("CmdOrCtrl+K").build(app)?;
     let find = MenuItemBuilder::with_id(FIND, "Search Tools").accelerator("CmdOrCtrl+Shift+F").build(app)?;
-    let github = MenuItemBuilder::with_id(GITHUB, "DevTools on GitHub").build(app)?;
+    let github = MenuItemBuilder::with_id(GITHUB, "Dojo on GitHub").build(app)?;
 
-    let app_menu = SubmenuBuilder::new(app, "DevTools")
-        .about(Some(AboutMetadata { name: Some("DevTools".into()), ..Default::default() }))
+    let app_menu = SubmenuBuilder::new(app, "Dojo")
+        .about(Some(AboutMetadata { name: Some("Dojo".into()), ..Default::default() }))
         .separator()
         .item(&settings)
         .separator()

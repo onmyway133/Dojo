@@ -30,7 +30,7 @@ export default function HexTextTool() {
       transform={transform}
       inputTitle={toHex ? "Text" : "Hex"}
       outputTitle={toHex ? "Hex" : "Text"}
-      sample={toHex ? "DevTools ⚙️" : "44 65 76 54 6f 6f 6c 73"}
+      sample={toHex ? "Dojo ⚙️" : "44 6f 6a 6f"}
       options={
         <ToolOptions>
           <Option label="Convert">

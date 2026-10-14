@@ -16,7 +16,7 @@ export default function TextBinaryTool() {
       transform={toBinary ? textToBinary : binaryToText}
       inputTitle={toBinary ? "Text" : "Binary"}
       outputTitle={toBinary ? "Binary" : "Text"}
-      sample={toBinary ? "DevTools" : "01000100 01100101 01110110"}
+      sample={toBinary ? "Dojo" : "01000100 01101111 01101010 01101111"}
       options={
         <ToolOptions>
           <Option label="Convert">

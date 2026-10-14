@@ -15,9 +15,9 @@ import { describeText } from "@/tools/shared/text";
 
 const language = markdown();
 
-const sample = `# DevTools
+const sample = `# Dojo
 
-A **macOS** toolbox with _58_ tools. See [the repo](https://github.com/onmyway133/DevTools).
+A **macOS** toolbox with _58_ tools. See [the repo](https://github.com/indiegoodies/Dojo).
 
 ## Features
 - [x] Formatters and converters

@@ -36,7 +36,7 @@ function LaunchAtLogin() {
     setRefresh((r) => r + 1);
   }
   return (
-    <SettingRow title="Open at login" description="Start DevTools when you log in to your Mac">
+    <SettingRow title="Open at login" description="Start Dojo when you log in to your Mac">
       <Switch checked={enabled.status === "success" && enabled.value} disabled={!inTauri} onCheckedChange={toggle} />
     </SettingRow>
   );
@@ -78,7 +78,7 @@ function Updates() {
   const status = {
     idle: version.status === "success" ? `You have version ${version.value}` : "",
     checking: "Checking…",
-    current: "DevTools is up to date",
+    current: "Dojo is up to date",
     available: state.kind === "available" ? `Version ${state.update.version} is available` : "",
     installing: state.kind === "installing" ? `Downloading ${Math.round(state.progress * 100)}%…` : "",
     error: state.kind === "error" ? `Couldn't check: ${state.message}` : "",

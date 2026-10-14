@@ -133,7 +133,7 @@ mod tests {
 
     #[test]
     fn writes_mac_and_ios_icon_set() {
-        let dir = std::env::temp_dir().join(format!("devtools-icon-test-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("dojo-icon-test-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
         let source = dir.join("source.png");
         DynamicImage::new_rgba8(300, 200).save(&source).unwrap();

@@ -45,7 +45,7 @@ export function sortKeysDeep(value: unknown): unknown {
 
 export const sampleJson = `{
   "id": 1024,
-  "name": "DevTools",
+  "name": "Dojo",
   "active": true,
   "rating": 4.8,
   "tags": ["json", "formatter", "macOS"],

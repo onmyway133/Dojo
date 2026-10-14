@@ -56,7 +56,7 @@ const spaced = (code: string) => code.replace(/(\d{3,4})(?=\d{3,4}$)/, "$1 ");
 
 export default function TotpTool() {
   const [secret, setSecret] = usePersistentState("secret", firstSecret);
-  const [issuer, setIssuer] = usePersistentState("issuer", "DevTools");
+  const [issuer, setIssuer] = usePersistentState("issuer", "Dojo");
   const [account, setAccount] = usePersistentState("account", "me@example.com");
   const [algorithm, setAlgorithm] = usePersistentState<TotpAlgorithm>("algorithm", "SHA-1");
   const [digits, setDigits] = usePersistentState<"6" | "8">("digits", "6");

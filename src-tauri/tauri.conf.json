@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "DevTools",
+  "productName": "Dojo",
   "version": "0.1.0",
   "identifier": "com.onmyway133.DevTools",
   "build": {
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "DevTools",
+        "title": "Dojo",
         "width": 1200,
         "height": 780,
         "minWidth": 820,
@@ -61,7 +61,7 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENEMzdDNzEyRUE1M0I1MzQKUldRMHRWUHFFc2MzemE4SGZaNzAyM2FCUWFNVnJIUGZQUnN6bHR3S1ZPRDhTSXlseDRWV0R0QjEK",
       "endpoints": [
-        "https://github.com/onmyway133/DevTools/releases/latest/download/latest.json"
+        "https://github.com/indiegoodies/Dojo/releases/latest/download/latest.json"
       ]
     }
   }
