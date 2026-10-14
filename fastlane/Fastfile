@@ -44,8 +44,9 @@ platform :mac do
     sh "rm -f '#{zip_path}' && cd '#{bundle_dir}' && zip -qr --symlinks '#{zip_path}' '#{app_name}.app'"
 
     # Tauri made the updater archive before stapling, so rebuild and re-sign it from the stapled app.
+    # No AppleDouble (._*) entries or xattrs: the updater's tar crate fails to unpack them.
     archive = File.join(out_dir, "#{app_name}.app.tar.gz")
-    sh "rm -f '#{archive}' '#{archive}.sig' && tar -czf '#{archive}' -C '#{bundle_dir}' '#{app_name}.app'"
+    sh "rm -f '#{archive}' '#{archive}.sig' && COPYFILE_DISABLE=1 tar --no-xattrs --no-mac-metadata -czf '#{archive}' -C '#{bundle_dir}' '#{app_name}.app'"
     Dir.chdir(ROOT) do
       sh({ "TAURI_SIGNING_PRIVATE_KEY_PATH" => updater_key, "TAURI_SIGNING_PRIVATE_KEY_PASSWORD" => "" },
          "pnpm tauri signer sign --app-version #{version} '#{archive}'")
