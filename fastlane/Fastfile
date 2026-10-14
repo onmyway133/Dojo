@@ -1,0 +1,70 @@
+require "json"
+require "time"
+
+default_platform(:mac)
+
+ROOT = File.expand_path("..", __dir__)
+
+platform :mac do
+  # Developer ID build outside the Mac App Store: build with Tauri, notarize, staple,
+  # then write the zip for download and the signed updater archive plus latest.json.
+  # Output goes to ~/Downloads/Standalone. Publishing the GitHub release is a separate step.
+  desc "Build, notarize and package the standalone (Developer ID) app"
+  lane :deploy_standalone do
+    app_name = "Dojo"
+    identity = "Developer ID Application: (set in fastlane/.env)"
+    notary_profile = "Khoa"
+    repo = "indiegoodies/Dojo"
+    updater_key = File.expand_path("~/.tauri/devtools.key")
+    target = "aarch64-apple-darwin"
+
+    UI.user_error!("Updater key not found at #{updater_key}") unless File.exist?(updater_key)
+
+    version = JSON.parse(File.read(File.join(ROOT, "src-tauri/tauri.conf.json")))["version"]
+    bundle_dir = File.join(ROOT, "src-tauri/target/release/bundle/macos")
+    app_path = File.join(bundle_dir, "#{app_name}.app")
+    out_dir = File.expand_path("~/Downloads/Standalone")
+    work_dir = File.join(ROOT, "build/notarize")
+
+    sh "rm -rf '#{work_dir}' '#{bundle_dir}' && mkdir -p '#{work_dir}' '#{out_dir}'"
+
+    # Tauri signs with the hardened runtime when APPLE_SIGNING_IDENTITY is set.
+    Dir.chdir(ROOT) do
+      sh({ "APPLE_SIGNING_IDENTITY" => identity, "TAURI_SIGNING_PRIVATE_KEY" => updater_key },
+         "pnpm tauri build --bundles app")
+    end
+    sh "codesign --verify --deep --strict --verbose=2 '#{app_path}'"
+
+    sh "ditto -c -k --keepParent '#{app_path}' '#{work_dir}/#{app_name}-submit.zip'"
+    sh "xcrun notarytool submit '#{work_dir}/#{app_name}-submit.zip' --keychain-profile '#{notary_profile}' --wait"
+    sh "xcrun stapler staple '#{app_path}'"
+    sh "spctl --assess --type execute --verbose '#{app_path}'"
+
+    zip_path = File.join(out_dir, "#{app_name}.zip")
+    sh "rm -f '#{zip_path}' && cd '#{bundle_dir}' && zip -qr --symlinks '#{zip_path}' '#{app_name}.app'"
+
+    # Tauri made the updater archive before stapling, so rebuild and re-sign it from the stapled app.
+    archive = File.join(out_dir, "#{app_name}.app.tar.gz")
+    sh "rm -f '#{archive}' '#{archive}.sig' && tar -czf '#{archive}' -C '#{bundle_dir}' '#{app_name}.app'"
+    Dir.chdir(ROOT) do
+      sh({ "TAURI_SIGNING_PRIVATE_KEY_PATH" => updater_key, "TAURI_SIGNING_PRIVATE_KEY_PASSWORD" => "" },
+         "pnpm tauri signer sign --app-version #{version} '#{archive}'")
+    end
+
+    manifest = {
+      version: version,
+      notes: "",
+      pub_date: Time.now.utc.iso8601,
+      platforms: {
+        "darwin-aarch64" => {
+          signature: File.read("#{archive}.sig").strip,
+          url: "https://github.com/#{repo}/releases/download/v#{version}/#{app_name}.app.tar.gz",
+        },
+      },
+    }
+    File.write(File.join(out_dir, "latest.json"), JSON.pretty_generate(manifest) + "\n")
+
+    UI.success("#{app_name} #{version} (#{target}) is in #{out_dir}")
+    UI.message("Publish: gh release create v#{version} --repo #{repo} '#{zip_path}' '#{archive}' '#{archive}.sig' '#{out_dir}/latest.json'")
+  end
+end

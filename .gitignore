@@ -26,3 +26,9 @@ dist-ssr
 # Tauri
 src-tauri/target
 src-tauri/gen
+
+# Fastlane
+*/build/*
+/build/
+fastlane/report.xml
+fastlane/README.md
