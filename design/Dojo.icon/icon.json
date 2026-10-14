@@ -1,14 +1,26 @@
 {
   "fill" : {
     "linear-gradient" : [
-      "extended-srgb:0.00000,0.75294,0.90980,1.00000",
-      "extended-srgb:0.00000,0.53333,1.00000,1.00000"
+      "srgb:0.99953,0.98836,0.47266,1.00000",
+      "srgb:0.99942,0.98555,0.00000,1.00000"
     ]
   },
   "groups" : [
     {
       "layers" : [
         {
+          "image-name" : "glyph.png",
+          "name" : "glyph",
+          "position" : {
+            "scale" : 0.75,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "hidden" : true,
           "image-name" : "glyph-alt.png",
           "name" : "glyph-alt",
           "position" : {
