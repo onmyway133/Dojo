@@ -1,6 +1,6 @@
 [package]
 name = "dojo"
-version = "1.0.0"
+version = "1.1.0"
 description = "Developer tools for macOS"
 authors = ["Khoa Pham"]
 edition = "2024"
