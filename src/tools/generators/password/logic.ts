@@ -39,10 +39,3 @@ export function entropyBits(options: PasswordOptions): number {
   const pool = activeSets(options).join("").length;
   return pool === 0 ? 0 : options.length * Math.log2(pool);
 }
-
-export function strengthLabel(bits: number): { label: string; tone: "weak" | "fair" | "strong" | "excellent" } {
-  if (bits < 50) return { label: "Weak", tone: "weak" };
-  if (bits < 70) return { label: "Fair", tone: "fair" };
-  if (bits < 100) return { label: "Strong", tone: "strong" };
-  return { label: "Excellent", tone: "excellent" };
-}

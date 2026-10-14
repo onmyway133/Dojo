@@ -12,7 +12,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { GeneratedList } from "@/tools/shared/GeneratedList";
-import { entropyBits, generatePassword, type PasswordOptions, strengthLabel } from "./logic";
+import { strengthBadgeVariant, strengthLabel } from "@/tools/shared/strength";
+import { entropyBits, generatePassword, type PasswordOptions } from "./logic";
 
 type Count = "1" | "5" | "10";
 const countChoices: Choice<Count>[] = ["1", "5", "10"].map((v) => ({ value: v as Count, label: v }));
@@ -70,7 +71,7 @@ export default function PasswordTool() {
           meta={
             <span className="flex items-center gap-1.5">
               {Math.round(bits)} bits of entropy
-              <Badge variant={strength.tone === "weak" ? "destructive" : strength.tone === "fair" ? "secondary" : "default"}>
+              <Badge variant={strengthBadgeVariant(strength.tone)}>
                 {strength.label}
               </Badge>
             </span>
