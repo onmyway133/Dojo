@@ -52,6 +52,16 @@
     margin: var(--ds-well-inset);
   }
 
+  /* A clickable tile inside a panel: a quiet fill that deepens on hover. */
+  .ds-cell {
+    background: var(--ds-cell-bg);
+    border-radius: var(--ds-cell-radius);
+    transition: background-color 120ms;
+  }
+  .ds-cell:hover {
+    background: var(--ds-cell-hover-bg);
+  }
+
   .ds-card {
     position: relative;
     background: var(--ds-card-bg);

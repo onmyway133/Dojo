@@ -195,6 +195,11 @@
   --ds-badge-danger-fg: var(--destructive);
   --ds-badge-danger-border: transparent;
 
+  /* Clickable tiles inside panels (cursor grid). */
+  --ds-cell-bg: var(--field);
+  --ds-cell-hover-bg: var(--field-hover);
+  --ds-cell-radius: 10px;
+
   /* Tool icons: a light accent tint with an accent glyph, flat. */
   --ds-tile-bg: color-mix(in oklab, var(--ds-accent) 12%, transparent);
   --ds-tile-fg: var(--ds-accent);
