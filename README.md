@@ -8,7 +8,7 @@ This repo holds the code.
 ## Requirements
 
 - macOS 13 or later
-- Node.js and pnpm (developed with Node 24 and pnpm 10)
+- Node.js 24 (pinned in `package.json` for Volta) and pnpm 10. Vite needs Node 20.19+ or 22.12+.
 - Rust 1.89 (`cargo`) and the Xcode command line tools (`xcode-select --install`)
 
 ## Run locally
