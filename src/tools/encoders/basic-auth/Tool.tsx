@@ -1,13 +1,4 @@
-import {
-  FieldList,
-  FieldRow,
-  ResultList,
-  ResultRow,
-  StatusMessage,
-  ToolPage,
-  ToolSection,
-  usePersistentState,
-} from "@/components/tool";
+import { FieldList, FieldRow, ResultList, ResultRow, StatusMessage, ToolPage, ToolSection, usePersistentState } from "@/components/tool";
 import { Input } from "@/components/ui/input";
 import { basicAuthHeader, parseBasicAuth } from "./logic";
 
@@ -31,19 +22,35 @@ export default function BasicAuthTool() {
       <ToolSection title="Credentials">
         <FieldList>
           <FieldRow label="Username">
-            <Input value={username} onChange={(e) => setUsername(e.target.value)} spellCheck={false} autoComplete="off" className="max-w-80" />
+            <Input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              spellCheck={false}
+              autoComplete="off"
+              className="max-w-80"
+            />
           </FieldRow>
           <FieldRow label="Password">
-            <Input value={password} onChange={(e) => setPassword(e.target.value)} spellCheck={false} autoComplete="off" className="max-w-80" />
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              spellCheck={false}
+              autoComplete="off"
+              className="max-w-80"
+            />
           </FieldRow>
         </FieldList>
       </ToolSection>
       <ToolSection title="Header">
-        <ResultList>
-          <ResultRow label="Value" value={value} mono />
-          <ResultRow label="Header" value={`Authorization: ${value}`} mono />
-          <ResultRow label="curl" value={`curl -H "Authorization: ${value}" https://example.com`} mono />
-        </ResultList>
+        {!username && !password ? (
+          <p className="text-[13px] text-muted-foreground">Enter a username and password to build the header.</p>
+        ) : (
+          <ResultList>
+            <ResultRow label="Value" value={value} mono />
+            <ResultRow label="Header" value={`Authorization: ${value}`} mono />
+            <ResultRow label="curl" value={`curl -H "Authorization: ${value}" https://example.com`} mono />
+          </ResultList>
+        )}
       </ToolSection>
       <ToolSection title="Decode">
         <Input
@@ -53,7 +60,11 @@ export default function BasicAuthTool() {
           spellCheck={false}
           className="font-mono text-[13px]"
         />
-        {decoded?.error && <StatusMessage tone="error" className="mt-3">{decoded.error}</StatusMessage>}
+        {decoded?.error && (
+          <StatusMessage tone="error" className="mt-3">
+            {decoded.error}
+          </StatusMessage>
+        )}
         {decoded?.value && (
           <div className="mt-2">
             <ResultList>
