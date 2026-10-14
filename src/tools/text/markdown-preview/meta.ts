@@ -7,5 +7,5 @@ export const meta = defineTool({
   description: "Write Markdown and see it rendered, copy the HTML",
   category: "text",
   icon: FileText,
-  keywords: ["markdown", "md", "preview", "gfm", "readme", "html"],
+  keywords: ["markdown", "md", "preview", "gfm", "readme", "html", "mermaid", "diagram", "flowchart"],
 });

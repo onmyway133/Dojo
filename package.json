@@ -55,6 +55,7 @@
     "lucide-react": "^1.56.0",
     "marked": "^18.1.1",
     "mathjs": "^15.2.0",
+    "mermaid": "^12.2.0",
     "mime-db": "^1.54.0",
     "papaparse": "^5.7.0",
     "prettier": "^3.9.10",
