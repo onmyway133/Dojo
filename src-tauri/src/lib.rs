@@ -1,6 +1,7 @@
 mod commands;
 mod error;
 mod menu;
+mod sumflare;
 mod tools;
 mod window;
 
@@ -64,14 +65,17 @@ pub fn run() {
             if let Some(main) = app.get_webview_window("main") {
                 window::fit_titlebar_to_traffic_lights(main.ns_window());
             }
+            sumflare::signal(app.handle());
             Ok(())
         })
         .menu(|app| menu::build(app))
         .on_menu_event(|app, event| menu::handle(app, event.id().as_ref()))
         .on_window_event(|window, event| {
             // AppKit stretches the title bar container again on every resize.
-            if let tauri::WindowEvent::Resized(_) = event {
-                window::fit_titlebar_to_traffic_lights(window.ns_window());
+            match event {
+                tauri::WindowEvent::Resized(_) => window::fit_titlebar_to_traffic_lights(window.ns_window()),
+                tauri::WindowEvent::Focused(true) => sumflare::signal(window.app_handle()),
+                _ => {}
             }
         })
         .run(tauri::generate_context!())
