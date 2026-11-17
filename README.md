@@ -1,55 +1,44 @@
-# Dojo
+<p align="center">
+  <img src="docs/images/icon.png" width="128" height="128" alt="Dojo app icon">
+</p>
 
-Developer tools for macOS, built with Tauri 2 (Rust) and React 19.
+<h1 align="center">Dojo</h1>
 
-Releases and the download live in [IndieGoodies/Dojo](https://github.com/IndieGoodies/Dojo).
-This repo holds the code.
+<p align="center">
+  Every developer tool in one free Mac app.<br>
+  Format, convert, encode, generate and test, without a browser tab.
+</p>
 
-## Requirements
+<p align="center">
+  <a href="https://github.com/IndieGoodies/Dojo/releases/latest">Download for macOS</a>
+</p>
 
-- macOS 13 or later
-- Node.js 24 (pinned in `package.json` for Volta) and pnpm 10. Vite needs Node 20.19+ or 22.12+.
-- Rust 1.89 (`cargo`) and the Xcode command line tools (`xcode-select --install`)
+![All tools](docs/images/home.webp)
 
-## Run locally
+![JSON Viewer](docs/images/json-viewer.webp)
 
-```bash
-pnpm install
-pnpm tauri dev
-```
+## Tools
 
-`pnpm tauri dev` starts the Vite dev server on port 1420 and opens the app. Frontend changes reload
-live; Rust changes rebuild the app.
+80+ tools, grouped in a sidebar and a searchable grid:
 
-To work on the frontend only in a browser, run `pnpm dev` and open http://localhost:1420.
-Tools that call Rust commands or native APIs (clipboard, files, updater) only work in the app.
+| Category | Examples |
+|---|---|
+| Formatters | JSON, XML, SQL, HTML, CSS, JavaScript, YAML, GraphQL |
+| Converters | Color, Cron, Date & Timestamp, JSON ⇄ CSV / XML / TOML / YAML, JSON to Code |
+| Encoders & Decoders | Base64, Base32 & Base58, JWT, GZIP, HTML Entities, Cookies, Basic Auth |
+| Generators | Hash, HMAC, Bcrypt, UUID, Nano ID, TOTP, Lorem Ipsum, App Icon Set |
+| Text | Regex Tester, Markdown Preview, Text Diff, List Compare, Slugify, Line Tools |
+| Testers | JSON Diff, JSON Schema, JSONPath, Semver, Password Strength |
+| Graphics | Image Converter, Image Compressor, Contrast Checker, Tints & Shades, Color Blindness |
+| Utilities | Calculator, Chmod, HTTP Status Codes, MIME Types, IPv4 Subnet, Key Codes |
 
-If a Tailwind class in a newly created file doesn't apply, restart the dev server.
+Tools run locally on your Mac; only Public IP goes online. Built with Tauri 2 (Rust) and React 19.
 
-## Test and build
+## Docs
 
-```bash
-pnpm test                    # Vitest, logic files only
-pnpm build                   # typecheck and build the frontend
-cd src-tauri && cargo test   # Rust unit tests
-```
-
-## Release
-
-```bash
-fastlane deploy_standalone
-```
-
-Builds the app, signs it with Developer ID, notarizes and staples it, and writes `Dojo.zip`,
-the updater archive with its signature, and `latest.json` to `~/Downloads/Standalone`. It needs
-the Developer ID certificate in the keychain, a notarytool keychain profile, and the updater key
-at `~/.tauri/devtools.key`. Copy `fastlane/.env.example` to `fastlane/.env` and fill in the signing
-identity, notary profile and analytics settings; fastlane loads it automatically. It then prints the `gh release create` command that
-publishes to IndieGoodies/Dojo.
-
-## Project layout
-
-See [AGENTS.md](AGENTS.md) for the folder layout, how to add a tool and the design system.
+- [Development](docs/development.md): requirements, running the app, tests
+- [Release](docs/release.md): signing, notarizing and publishing an update
+- [AGENTS.md](AGENTS.md): folder layout, adding a tool, the design system
 
 ## License
 
