@@ -8,6 +8,6 @@ it("builds accessor paths", () => {
 });
 
 it("keeps ancestors of matches", () => {
-  const paths = matchingPaths({ owner: { login: "khoa" }, id: 1 }, "kho");
+  const paths = matchingPaths({ owner: { login: "jane" }, id: 1 }, "jan");
   expect([...paths].sort()).toEqual(["$", "$.owner", "$.owner.login"]);
 });

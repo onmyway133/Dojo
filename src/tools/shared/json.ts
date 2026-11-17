@@ -49,7 +49,7 @@ export const sampleJson = `{
   "active": true,
   "rating": 4.8,
   "tags": ["json", "formatter", "macOS"],
-  "owner": { "login": "khoa", "url": "https://github.com/onmyway133" },
+  "owner": { "login": "jane", "url": "https://example.com/jane" },
   "releases": [
     { "version": "1.0.0", "date": "2026-10-13T09:30:00Z", "notes": null },
     { "version": "1.1.0", "date": "2026-11-02T12:00:00Z", "notes": "Dark mode" }

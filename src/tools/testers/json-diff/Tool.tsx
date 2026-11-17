@@ -13,8 +13,8 @@ import { Badge } from "@/components/ui/badge";
 import { diffJsonText, type JsonChange } from "./logic";
 
 const jsonLanguage = json();
-const sampleA = JSON.stringify({ name: "dojo", version: "1.0.0", tags: ["json", "mac"], owner: { login: "khoa", plan: "free" } }, null, 2);
-const sampleB = JSON.stringify({ name: "dojo", version: "1.1.0", tags: ["json"], owner: { login: "khoa" }, license: "MIT" }, null, 2);
+const sampleA = JSON.stringify({ name: "dojo", version: "1.0.0", tags: ["json", "mac"], owner: { login: "jane", plan: "free" } }, null, 2);
+const sampleB = JSON.stringify({ name: "dojo", version: "1.1.0", tags: ["json"], owner: { login: "jane" }, license: "AGPL-3.0" }, null, 2);
 
 const show = (value: unknown) => (value === undefined ? "" : JSON.stringify(value));
 const kindBadge = { added: "default", removed: "destructive", changed: "secondary" } as const;

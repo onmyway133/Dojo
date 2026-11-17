@@ -47,7 +47,7 @@ const sizeChoices: Choice<Size>[] = [
 ];
 
 function GeneratePanel({ modePicker }: { modePicker: ReactNode }) {
-  const [text, setText] = usePersistentState("text", "https://github.com/onmyway133");
+  const [text, setText] = usePersistentState("text", "https://example.com");
   const [level, setLevel] = usePersistentState<Level>("level", "M");
   const [size, setSize] = usePersistentState<Size>("size", "512");
   const debounced = useDebounced(text, 150);
