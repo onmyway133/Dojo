@@ -1,6 +1,9 @@
 //! Counts daily active users in our Sumflare install, the same way the Sumflare Swift SDK does:
 //! one signal on launch and when the app becomes active, at most once per UTC day. Each install
 //! gets a random ID that stays on this Mac; nothing else about the user is sent.
+//!
+//! The app key and endpoint come from `SUMFLARE_APP_KEY` and `SUMFLARE_ENDPOINT` at build time.
+//! When either is missing (local and forked builds), nothing is sent.
 
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -10,8 +13,16 @@ use rand_core::{OsRng, RngCore};
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager};
 
-const APP_KEY: &str = "SUMFLARE_APP_KEY_REMOVED";
-const ENDPOINT: &str = "https://indiegoodies.sumflare.com/api/signal";
+const APP_KEY: Option<&str> = option_env!("SUMFLARE_APP_KEY");
+const ENDPOINT: Option<&str> = option_env!("SUMFLARE_ENDPOINT");
+
+/// The app key and endpoint, or `None` when the build wasn't configured for analytics.
+fn config() -> Option<(&'static str, &'static str)> {
+    match (APP_KEY, ENDPOINT) {
+        (Some(key), Some(endpoint)) if !key.is_empty() && !endpoint.is_empty() => Some((key, endpoint)),
+        _ => None,
+    }
+}
 
 static IS_SENDING: AtomicBool = AtomicBool::new(false);
 
@@ -24,6 +35,9 @@ struct State {
 
 /// Sends today's signal if it hasn't been sent yet. Safe to call on every launch and focus.
 pub fn signal(app: &AppHandle) {
+    if config().is_none() {
+        return;
+    }
     let Ok(dir) = app.path().app_data_dir() else {
         return;
     };
@@ -50,17 +64,20 @@ pub fn signal(app: &AppHandle) {
 }
 
 async fn send(user_id: &str, app_version: &str) -> bool {
+    let Some((app_key, endpoint)) = config() else {
+        return false;
+    };
     let Ok(client) = reqwest::Client::builder().timeout(Duration::from_secs(10)).build() else {
         return false;
     };
     let body = serde_json::json!({
-        "appKey": APP_KEY,
+        "appKey": app_key,
         "userId": user_id,
         "appVersion": app_version,
         "osVersion": os_version(),
         "platform": "macOS",
     });
-    match client.post(ENDPOINT).json(&body).send().await {
+    match client.post(endpoint).json(&body).send().await {
         Ok(response) => response.status().as_u16() == 202,
         Err(_) => false,
     }

@@ -42,8 +42,9 @@ fastlane deploy_standalone
 
 Builds the app, signs it with Developer ID, notarizes and staples it, and writes `Dojo.zip`,
 the updater archive with its signature, and `latest.json` to `~/Downloads/Standalone`. It needs
-the Developer ID certificate in the keychain, the notarytool keychain profile `Khoa`, and the
-updater key at `~/.tauri/devtools.key`. It then prints the `gh release create` command that
+the Developer ID certificate in the keychain, a notarytool keychain profile, and the updater key
+at `~/.tauri/devtools.key`. Copy `fastlane/.env.example` to `fastlane/.env` and fill in the signing
+identity, notary profile and analytics settings; fastlane loads it automatically. It then prints the `gh release create` command that
 publishes to IndieGoodies/Dojo.
 
 ## Project layout

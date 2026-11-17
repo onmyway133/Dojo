@@ -35,3 +35,6 @@ fastlane/README.md
 
 # Local planning notes (kaji)
 .kaji/
+
+# Local release settings
+fastlane/.env

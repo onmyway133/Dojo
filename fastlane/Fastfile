@@ -12,10 +12,15 @@ platform :mac do
   desc "Build, notarize and package the standalone (Developer ID) app"
   lane :deploy_standalone do
     app_name = "Dojo"
-    identity = "Developer ID Application: (set in fastlane/.env)"
-    notary_profile = "Khoa"
+    # Signing identity, notary profile and analytics settings come from fastlane/.env (not in git).
+    # See fastlane/.env.example.
+    %w[DEVELOPER_ID_IDENTITY NOTARY_KEYCHAIN_PROFILE SUMFLARE_APP_KEY SUMFLARE_ENDPOINT].each do |name|
+      UI.user_error!("Set #{name} in fastlane/.env (see fastlane/.env.example)") if ENV[name].to_s.empty?
+    end
+    identity = ENV["DEVELOPER_ID_IDENTITY"]
+    notary_profile = ENV["NOTARY_KEYCHAIN_PROFILE"]
     repo = "indiegoodies/Dojo"
-    updater_key = File.expand_path("~/.tauri/devtools.key")
+    updater_key = File.expand_path(ENV.fetch("TAURI_UPDATER_KEY_PATH", "~/.tauri/devtools.key"))
     target = "aarch64-apple-darwin"
 
     UI.user_error!("Updater key not found at #{updater_key}") unless File.exist?(updater_key)
