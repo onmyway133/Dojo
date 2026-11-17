@@ -50,3 +50,7 @@ publishes to IndieGoodies/Dojo.
 ## Project layout
 
 See [AGENTS.md](AGENTS.md) for the folder layout, how to add a tool and the design system.
+
+## License
+
+GNU Affero General Public License v3.0 (AGPL-3.0). See [LICENSE](LICENSE).
