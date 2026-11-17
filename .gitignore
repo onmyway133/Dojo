@@ -32,3 +32,6 @@ src-tauri/gen
 /build/
 fastlane/report.xml
 fastlane/README.md
+
+# Local planning notes (kaji)
+.kaji/
