@@ -34,4 +34,4 @@ cd src-tauri && cargo test   # Rust unit tests
 
 ## Project layout
 
-See [AGENTS.md](../AGENTS.md) for the folder layout, how to add a tool and the design system.
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for the folder layout, how to add a tool and the design system.

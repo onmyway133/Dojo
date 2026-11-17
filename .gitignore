@@ -38,3 +38,7 @@ fastlane/README.md
 
 # Local release settings
 fastlane/.env
+
+# Agent instructions (local only)
+AGENTS.md
+CLAUDE.md

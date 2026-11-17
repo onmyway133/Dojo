@@ -38,7 +38,7 @@ Tools run locally on your Mac; only Public IP goes online. Built with Tauri 2 (R
 
 - [Development](docs/development.md): requirements, running the app, tests
 - [Release](docs/release.md): signing, notarizing and publishing an update
-- [AGENTS.md](AGENTS.md): folder layout, adding a tool, the design system
+- [Contributing](CONTRIBUTING.md): folder layout, adding a tool, the design system
 
 ## License
 
