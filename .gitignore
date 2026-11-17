@@ -42,3 +42,6 @@ fastlane/.env
 # Agent instructions (local only)
 AGENTS.md
 CLAUDE.md
+
+# Local agent workspace
+.super/
