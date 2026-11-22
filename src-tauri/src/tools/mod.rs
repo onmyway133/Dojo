@@ -1,6 +1,7 @@
 //! Pure tool logic, independent of Tauri so it can be unit tested.
 
 pub mod app_icon;
+pub mod apple;
 pub mod certificate;
 pub mod convert;
 pub mod gzip;

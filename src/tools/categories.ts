@@ -7,6 +7,7 @@ import {
   Type,
   Binary,
   Wrench,
+  Smartphone,
 } from "lucide-react";
 import type { Category } from "./types";
 
@@ -20,4 +21,5 @@ export const categories: Category[] = [
   { id: "testers", name: "Testers", icon: FlaskConical },
   { id: "graphics", name: "Graphics", icon: Image },
   { id: "utilities", name: "Utilities", icon: Wrench },
+  { id: "apple", name: "Apple", icon: Smartphone },
 ];

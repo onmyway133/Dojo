@@ -1,5 +1,6 @@
 //! Thin `#[tauri::command]` wrappers. Logic lives in `crate::tools`.
 
+pub mod apple;
 pub mod convert;
 pub mod encode;
 pub mod files;

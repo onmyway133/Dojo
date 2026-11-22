@@ -41,7 +41,7 @@ pub fn parse_pem_bundle(input: &str) -> AppResult<Vec<CertificateInfo>> {
     Ok(certificates)
 }
 
-fn describe(der: &[u8]) -> AppResult<CertificateInfo> {
+pub fn describe(der: &[u8]) -> AppResult<CertificateInfo> {
     let (_, cert) = X509Certificate::from_der(der)
         .map_err(|e| AppError::invalid(format!("Invalid certificate: {e}")))?;
 

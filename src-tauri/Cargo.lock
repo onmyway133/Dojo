@@ -1106,6 +1106,7 @@ dependencies = [
  "objc2-app-kit",
  "objc2-foundation",
  "oxipng",
+ "plist",
  "rand_core",
  "reqwest",
  "rsa",

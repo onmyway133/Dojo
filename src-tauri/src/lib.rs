@@ -48,6 +48,7 @@ pub fn run() {
             commands::encode::gzip_compress,
             commands::encode::gzip_decompress,
             commands::encode::parse_certificates,
+            commands::apple::decode_profile_file,
             commands::generate::generate_rsa_keys,
             commands::generate::generate_app_icon,
             commands::generate::bcrypt_hash,
