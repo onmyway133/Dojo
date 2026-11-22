@@ -52,6 +52,7 @@ pub fn run() {
             commands::apple::plist_to_json,
             commands::apple::json_to_plist,
             commands::apple::plist_file_to_xml,
+            commands::apple::macho_uuids,
             commands::generate::generate_rsa_keys,
             commands::generate::generate_app_icon,
             commands::generate::bcrypt_hash,

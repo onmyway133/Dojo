@@ -374,3 +374,278 @@ mod tests {
         assert!(back.contains("\"ratio\": 0.5"));
     }
 }
+
+// MARK: Mach-O UUIDs
+
+#[derive(Debug, serde::Serialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ArchUuid {
+    pub arch: String,
+    /// Uppercase with dashes, as `dwarfdump --uuid` and crash logs print it.
+    pub uuid: Option<String>,
+}
+
+#[derive(Debug, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MachOInfo {
+    /// The binary inside a bundle, or the file itself.
+    pub binary: String,
+    pub archs: Vec<ArchUuid>,
+}
+
+/// Random access to a file without reading all of it (DWARF files can be huge).
+pub trait ByteSource {
+    fn bytes(&self, offset: u64, len: usize) -> AppResult<Vec<u8>>;
+}
+
+impl ByteSource for [u8] {
+    fn bytes(&self, offset: u64, len: usize) -> AppResult<Vec<u8>> {
+        let start = usize::try_from(offset).map_err(|_| truncated())?;
+        self.get(start..start.checked_add(len).ok_or_else(truncated)?)
+            .map(<[u8]>::to_vec)
+            .ok_or_else(truncated)
+    }
+}
+
+impl ByteSource for std::fs::File {
+    fn bytes(&self, offset: u64, len: usize) -> AppResult<Vec<u8>> {
+        use std::os::unix::fs::FileExt;
+        let mut buf = vec![0; len];
+        self.read_exact_at(&mut buf, offset)
+            .map_err(|_| truncated())?;
+        Ok(buf)
+    }
+}
+
+fn truncated() -> AppError {
+    AppError::invalid("The file ends early; not a complete Mach-O binary")
+}
+
+const FAT_MAGIC: u32 = 0xCAFE_BABE;
+const FAT_MAGIC_64: u32 = 0xCAFE_BABF;
+const MH_MAGIC: u32 = 0xFEED_FACE;
+const MH_MAGIC_64: u32 = 0xFEED_FACF;
+const LC_UUID: u32 = 0x1B;
+
+fn u32_at(bytes: &[u8], at: usize, big: bool) -> u32 {
+    let b = [bytes[at], bytes[at + 1], bytes[at + 2], bytes[at + 3]];
+    if big {
+        u32::from_be_bytes(b)
+    } else {
+        u32::from_le_bytes(b)
+    }
+}
+
+fn arch_name(cpu: u32, subtype: u32) -> String {
+    let sub = subtype & 0x00FF_FFFF;
+    match (cpu, sub) {
+        (0x0100_000C, 2) => "arm64e".into(),
+        (0x0100_000C, 0 | 1) => "arm64".into(),
+        (0x0100_000C, _) => format!("arm64 (subtype {sub})"),
+        (0x0200_000C, _) => "arm64_32".into(),
+        (0x0100_0007, 8) => "x86_64h".into(),
+        (0x0100_0007, _) => "x86_64".into(),
+        (7, _) => "i386".into(),
+        (12, 9) => "armv7".into(),
+        (12, 11) => "armv7s".into(),
+        (12, 12) => "armv7k".into(),
+        (12, _) => "arm".into(),
+        _ => format!("cpu {cpu:#x}"),
+    }
+}
+
+fn format_uuid(b: &[u8]) -> String {
+    let hex: String = b.iter().map(|x| format!("{x:02X}")).collect();
+    format!(
+        "{}-{}-{}-{}-{}",
+        &hex[0..8],
+        &hex[8..12],
+        &hex[12..16],
+        &hex[16..20],
+        &hex[20..32]
+    )
+}
+
+/// One thin Mach-O image starting at `offset`.
+fn thin_uuid(src: &(impl ByteSource + ?Sized), offset: u64) -> AppResult<ArchUuid> {
+    let header = src.bytes(offset, 32)?;
+    let magic_le = u32_at(&header, 0, false);
+    let magic_be = u32_at(&header, 0, true);
+    let (big, is64) = match (magic_le, magic_be) {
+        (MH_MAGIC_64, _) => (false, true),
+        (MH_MAGIC, _) => (false, false),
+        (_, MH_MAGIC_64) => (true, true),
+        (_, MH_MAGIC) => (true, false),
+        _ => return Err(AppError::invalid("Not a Mach-O binary")),
+    };
+    let arch = arch_name(u32_at(&header, 4, big), u32_at(&header, 8, big));
+    let ncmds = u32_at(&header, 16, big);
+    let sizeofcmds = u32_at(&header, 20, big) as usize;
+    if ncmds > 10_000 || sizeofcmds > 64 * 1024 * 1024 {
+        return Err(AppError::invalid("Mach-O header looks corrupt"));
+    }
+    let commands = src.bytes(offset + if is64 { 32 } else { 28 }, sizeofcmds)?;
+    let mut at = 0usize;
+    for _ in 0..ncmds {
+        if at + 8 > commands.len() {
+            break;
+        }
+        let cmd = u32_at(&commands, at, big);
+        let size = u32_at(&commands, at + 4, big) as usize;
+        if cmd == LC_UUID && at + 24 <= commands.len() {
+            return Ok(ArchUuid {
+                arch,
+                uuid: Some(format_uuid(&commands[at + 8..at + 24])),
+            });
+        }
+        if size < 8 {
+            break;
+        }
+        at += size;
+    }
+    Ok(ArchUuid { arch, uuid: None })
+}
+
+/// UUIDs of every architecture in a thin or universal (fat) Mach-O file.
+pub fn macho_uuids(src: &(impl ByteSource + ?Sized)) -> AppResult<Vec<ArchUuid>> {
+    let head = src.bytes(0, 8)?;
+    let magic = u32_at(&head, 0, true);
+    if magic != FAT_MAGIC && magic != FAT_MAGIC_64 {
+        return Ok(vec![thin_uuid(src, 0)?]);
+    }
+    let count = u32_at(&head, 4, true);
+    // Java class files share 0xCAFEBABE; their "count" is a version number in the 40s+.
+    if count == 0 || count > 32 {
+        return Err(AppError::invalid("Not a Mach-O binary"));
+    }
+    let entry = if magic == FAT_MAGIC_64 { 32 } else { 20 };
+    let table = src.bytes(8, entry * count as usize)?;
+    (0..count as usize)
+        .map(|i| {
+            let e = &table[i * entry..];
+            let offset = if magic == FAT_MAGIC_64 {
+                u64::from_be_bytes(e[8..16].try_into().unwrap_or_default())
+            } else {
+                u64::from(u32_at(e, 8, true))
+            };
+            thin_uuid(src, offset)
+        })
+        .collect()
+}
+
+/// The executable inside a .dSYM, .app, .appex or .framework folder.
+pub fn bundle_binary(dir: &std::path::Path) -> AppResult<std::path::PathBuf> {
+    let dwarf = dir.join("Contents/Resources/DWARF");
+    if dwarf.is_dir() {
+        if let Some(first) = std::fs::read_dir(&dwarf)?
+            .filter_map(Result::ok)
+            .map(|e| e.path())
+            .find(|p| p.is_file())
+        {
+            return Ok(first);
+        }
+    }
+    for info in [
+        "Contents/Info.plist",
+        "Info.plist",
+        "Resources/Info.plist",
+        "Versions/Current/Resources/Info.plist",
+    ] {
+        let Ok(bytes) = std::fs::read(dir.join(info)) else {
+            continue;
+        };
+        let Some(name) = parse_plist(&bytes).ok().and_then(|v| {
+            v.as_dictionary()
+                .and_then(|d| d.get("CFBundleExecutable"))
+                .and_then(Value::as_string)
+                .map(str::to_owned)
+        }) else {
+            continue;
+        };
+        for candidate in [
+            dir.join("Contents/MacOS").join(&name),
+            dir.join(&name),
+            dir.join("Versions/Current").join(&name),
+        ] {
+            if candidate.is_file() {
+                return Ok(candidate);
+            }
+        }
+    }
+    Err(AppError::invalid(
+        "No executable found in this folder. Drop a .dSYM, .app, .framework or a binary",
+    ))
+}
+
+pub fn macho_file(path: &std::path::Path) -> AppResult<MachOInfo> {
+    let binary = if path.is_dir() {
+        bundle_binary(path)?
+    } else {
+        path.to_path_buf()
+    };
+    let file = std::fs::File::open(&binary)?;
+    Ok(MachOInfo {
+        binary: binary.to_string_lossy().into_owned(),
+        archs: macho_uuids(&file)?,
+    })
+}
+
+#[cfg(test)]
+mod macho_tests {
+    use super::*;
+
+    /// A thin 64-bit arm64 header with one segment-like command and an LC_UUID.
+    fn thin(uuid_byte: u8) -> Vec<u8> {
+        let mut b = Vec::new();
+        for v in [MH_MAGIC_64, 0x0100_000C, 0, 2, 2, 16 + 24, 0, 0] {
+            b.extend_from_slice(&v.to_le_bytes());
+        }
+        b.extend_from_slice(&0x19u32.to_le_bytes());
+        b.extend_from_slice(&16u32.to_le_bytes());
+        b.extend_from_slice(&[0; 8]);
+        b.extend_from_slice(&LC_UUID.to_le_bytes());
+        b.extend_from_slice(&24u32.to_le_bytes());
+        b.extend_from_slice(&[uuid_byte; 16]);
+        b
+    }
+
+    #[test]
+    fn reads_thin_binary() {
+        let archs = macho_uuids(thin(0xAB).as_slice()).unwrap();
+        assert_eq!(
+            archs,
+            vec![ArchUuid {
+                arch: "arm64".into(),
+                uuid: Some("ABABABAB-ABAB-ABAB-ABAB-ABABABABABAB".into())
+            }]
+        );
+    }
+
+    #[test]
+    fn reads_fat_binary() {
+        let slice = thin(0x01);
+        let mut b = Vec::new();
+        for v in [FAT_MAGIC, 2] {
+            b.extend_from_slice(&v.to_be_bytes());
+        }
+        let first = 64u32;
+        let second = first + slice.len() as u32;
+        for (cpu, offset) in [(0x0100_0007u32, first), (0x0100_000C, second)] {
+            for v in [cpu, 3, offset, slice.len() as u32, 0] {
+                b.extend_from_slice(&v.to_be_bytes());
+            }
+        }
+        b.resize(first as usize, 0);
+        b.extend_from_slice(&slice);
+        b.extend_from_slice(&slice);
+        let archs = macho_uuids(b.as_slice()).unwrap();
+        assert_eq!(archs.len(), 2);
+        // The arch comes from each slice's own header.
+        assert_eq!(archs[1].arch, "arm64");
+    }
+
+    #[test]
+    fn rejects_other_files() {
+        assert!(macho_uuids(b"hello world, not mach-o".as_slice()).is_err());
+    }
+}

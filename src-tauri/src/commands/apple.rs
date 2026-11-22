@@ -30,3 +30,11 @@ pub fn plist_file_to_xml(base64: String) -> AppResult<String> {
         .map_err(|e| AppError::invalid(format!("Invalid file data: {e}")))?;
     apple::plist_to_xml(&bytes)
 }
+
+/// LC_UUID of each architecture in a binary, or in the executable of a dropped bundle.
+#[tauri::command]
+pub async fn macho_uuids(path: String) -> AppResult<apple::MachOInfo> {
+    tauri::async_runtime::spawn_blocking(move || apple::macho_file(std::path::Path::new(&path)))
+        .await
+        .map_err(|e| AppError::invalid(e.to_string()))?
+}
