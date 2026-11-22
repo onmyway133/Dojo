@@ -114,8 +114,7 @@ export default function ApnsPayloadTool() {
             }
             actions={<CopyButton value={payload ? JSON.stringify(payload) : ""} label="Copy Minified" />}
             padded={false}
-            className="min-h-64"
-            fill
+            className="shrink-0"
           >
             {error ? <StatusMessage tone="error" className="mx-4">{error}</StatusMessage> : <CodeEditor value={output} language={jsonLanguage} readOnly lineNumbers={false} />}
           </ToolSection>
