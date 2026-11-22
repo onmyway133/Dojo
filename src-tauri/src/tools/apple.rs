@@ -86,11 +86,12 @@ fn json_to_plist_value(value: &Json) -> AppResult<Value> {
     })
 }
 
-/// JSON to an XML property list.
-pub fn json_to_plist(json: &str) -> AppResult<String> {
-    let parsed: Json =
-        serde_json::from_str(json).map_err(|e| AppError::invalid(format!("Invalid JSON: {e}")))?;
-    let value = json_to_plist_value(&parsed)?;
+/// Any plist (binary or XML) re-written as XML text.
+pub fn plist_to_xml(bytes: &[u8]) -> AppResult<String> {
+    write_xml(&parse_plist(bytes)?)
+}
+
+fn write_xml(value: &Value) -> AppResult<String> {
     let mut out = Vec::new();
     value
         .to_writer_xml(&mut out)
@@ -100,6 +101,13 @@ pub fn json_to_plist(json: &str) -> AppResult<String> {
         xml.push('\n');
     }
     Ok(xml)
+}
+
+/// JSON to an XML property list.
+pub fn json_to_plist(json: &str) -> AppResult<String> {
+    let parsed: Json =
+        serde_json::from_str(json).map_err(|e| AppError::invalid(format!("Invalid JSON: {e}")))?;
+    write_xml(&json_to_plist_value(&parsed)?)
 }
 
 // MARK: Provisioning profiles
@@ -351,6 +359,18 @@ mod tests {
         assert!(xml.contains("<key>count</key>"));
         assert!(xml.contains("<integer>3</integer>"));
         let back = plist_to_json(xml.as_bytes()).unwrap();
+        // Binary plists (bplist00) convert too.
+        let mut binary = Vec::new();
+        parse_plist(xml.as_bytes())
+            .unwrap()
+            .to_writer_binary(&mut binary)
+            .unwrap();
+        assert!(binary.starts_with(b"bplist00"));
+        assert!(
+            plist_to_xml(&binary)
+                .unwrap()
+                .contains("<string>Dojo</string>")
+        );
         assert!(back.contains("\"ratio\": 0.5"));
     }
 }
